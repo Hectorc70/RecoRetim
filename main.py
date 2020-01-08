@@ -1,4 +1,10 @@
-from archivo_retimbre import Layaout_Retimbre
-from rutas import Rutas
+from tkinter.filedialog import askdirectory
 
+from carpetas import CarpetaNomina
+
+
+def obtener_rutas_archivos():
+    CarpetaNomina(askdirectory())
+    
+obtener_rutas_archivos()
 
