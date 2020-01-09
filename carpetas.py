@@ -1,5 +1,5 @@
 import os
-from os.path import splitext
+from nominas.ordinaria import NominaOrdinaria
 
 
 class CarpetaNomina():
@@ -22,12 +22,18 @@ class CarpetaNomina():
           
             
             for tipo_de_nomina in carpetas:
+                ruta_completa_nomina = ruta.replace("/", "\\") + "\\" + tipo_de_nomina
+
+                if tipo_de_nomina.split("_")[0] == "ORDINARIA":
+
+                    n_ordinaria = NominaOrdinaria(ruta_completa_nomina)
+                    
 
                 nomina_mayusc = tipo_de_nomina.upper()
-                self.carpetas_nom[ nomina_mayusc] = ruta.replace("/", "\\") + "\\" + tipo_de_nomina
+                self.carpetas_nom[ nomina_mayusc] = ruta_completa_nomina
 
-                
-                
+        return self.carpetas_nom    
+            
 
                 
 
