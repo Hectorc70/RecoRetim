@@ -1,5 +1,5 @@
 import os
-from nominas.ordinaria import NominaOrdinaria
+from nominas.nomina import NominaOrdinaria
 
 
 class CarpetaNomina():
@@ -27,7 +27,7 @@ class CarpetaNomina():
                 if tipo_de_nomina.split("_")[0] == "ORDINARIA":
 
                     n_ordinaria = NominaOrdinaria(ruta_completa_nomina)
-                    
+                    n_ordinaria.crear_log()
 
                 nomina_mayusc = tipo_de_nomina.upper()
                 self.carpetas_nom[ nomina_mayusc] = ruta_completa_nomina
