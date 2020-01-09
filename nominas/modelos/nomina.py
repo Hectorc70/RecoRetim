@@ -7,7 +7,7 @@ from nominas.ayuda.log import Log
 
 
 class Nomina:    
-    """NOMINA DE BASE"""
+    """NOMINA con ticket 1"""
 
     def __init__(self, ruta):
         self.ruta = ruta
@@ -23,13 +23,15 @@ class Nomina:
             for archivo in archivos:
 
                 carpeta_de_nomina = ruta.split("\\")[3]
+                tipo_de_nomina    = ruta.split("\\")[4] 
                 extencion = os.path.splitext(archivo)
 
                 if (carpeta_de_nomina.split("_")[0] == 'ORDINARIA' and
-                    tipo_de_nomina.split("_")[0] == 'BASE')::
+                    tipo_de_nomina.split("_")[0] == 'BASE'):
 
                     if extencion[-1] == '.xml':
-                        self.rutas_timbres_ord.append(archivo)
+                        ruta_completa = ruta + "\\" + archivo
+                        self.rutas_timbres_ord.append(ruta_completa)
 
 
 
@@ -50,7 +52,8 @@ class Nomina:
                     tipo_de_nomina.split("_")[0] == 'BASE'):
 
                     if extencion[-1] == '.txt':
-                        self.rutas_cfdi_ord.append(archivo)
+                        ruta_completa = ruta + "\\" + archivo
+                        self.rutas_cfdi_ord.append(ruta_completa)
 
 
 
@@ -77,14 +80,14 @@ class Nomina:
 
 
 class Nomina4():
-    """NOMINA DE BASE O NOMINAS CON TICKET 4(APORTACION) """
+    """NOMINA CON TICKET 4(APORTACION) """
     def __init__(self, ruta):
         self.ruta = ruta
 
 
-    def recuperar_timbres_nom4(self.)
+    def recuperar_timbres_nom4(self):
 
-         """Recupera archivos xml(TIMBRES de los CFDI) de la nomina4 de los
+        """Recupera archivos xml(TIMBRES de los CFDI) de la nomina4 de los
             empleados"""
 
         self.rutas_timbres4 = list()
@@ -101,7 +104,8 @@ class Nomina4():
                     tipo_de_nomina.split("_")[0] == 'BASE4'):
 
                     if extencion[-1] == '.xml':
-                        self.rutas_timbres4.append(archivo)
+                        ruta_completa = ruta + "\\" + archivo
+                        self.rutas_timbres4.append(ruta_completa)
     
 
     def recuperar_txt_nom4(self):
@@ -123,7 +127,8 @@ class Nomina4():
                     tipo_de_nomina.split("_")[0] == 'BASE4'):
 
                     if extencion[-1] == '.txt':
-                        self.rutas_cfdi4.append(archivo)
+                        ruta_completa = ruta + "\\" + archivo
+                        self.rutas_cfdi4.append(ruta_completa)
 
 class NominaConfianza():
     """NOMINA DE CONFIANZA TICKET 5"""
@@ -133,9 +138,9 @@ class NominaConfianza():
         self.ruta = ruta
 
 
-    def recuperar_timbres_nom5(self.)
+    def recuperar_timbres_nom5(self):
 
-         """Recupera archivos xml(TIMBRES de los CFDI) de la nomina 5(confianza)
+        """Recupera archivos xml(TIMBRES de los CFDI) de la nomina 5(confianza)
            de los empleados"""
 
         self.rutas_timbres5 = list()
@@ -152,7 +157,8 @@ class NominaConfianza():
                     tipo_de_nomina.split("_")[0] == 'CONFIANZA'):
 
                     if extencion[-1] == '.xml':
-                        self.rutas_timbres5.append(archivo)
+                        ruta_completa = ruta + "\\" + archivo
+                        self.rutas_timbres5.append(ruta_completa)
     
 
     def recuperar_txt_nom5(self):
@@ -174,6 +180,7 @@ class NominaConfianza():
                     tipo_de_nomina.split("_")[0] == 'CONFIANZA'):
 
                     if extencion[-1] == '.txt':
-                        self.rutas_cfdi5.append(archivo)
+                        ruta_completa = ruta + "\\" + archivo
+                        self.rutas_cfdi5.append(ruta_completa)
 
 

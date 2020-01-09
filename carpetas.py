@@ -1,5 +1,5 @@
 import os
-from nominas.nomina import NominaOrdinaria
+from nominas.ordinaria import NominaOrdinariaBase
 
 
 class CarpetaNomina():
@@ -8,10 +8,10 @@ class CarpetaNomina():
 
     def __init__(self, ruta):
         self.ruta_obtener_carpeta = ruta
-        self.recuperar_rutas()
+        self.ejecutar_nominas()
     
 
-    def recuperar_rutas(self):
+    def ejecutar_nominas(self):
         """Recupera las carpeta de las nominas""" 
 
         self.carpetas_nom = dict()
@@ -25,9 +25,9 @@ class CarpetaNomina():
                 ruta_completa_nomina = ruta.replace("/", "\\") + "\\" + tipo_de_nomina
 
                 if tipo_de_nomina.split("_")[0] == "ORDINARIA":
+                    nom_base = NominaOrdinariaBase(ruta_completa_nomina)
 
-                    n_ordinaria = NominaOrdinaria(ruta_completa_nomina)
-                    n_ordinaria.crear_log()
+                    
 
                 nomina_mayusc = tipo_de_nomina.upper()
                 self.carpetas_nom[ nomina_mayusc] = ruta_completa_nomina

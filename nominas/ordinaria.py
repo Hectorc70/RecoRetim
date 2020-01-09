@@ -1,57 +1,32 @@
+
 import os
 import os.path
 from tkinter.filedialog import asksaveasfilename
 from os.path import splitext
-from nominas.ayuda.log import Log
+
+from nominas.modelos.nomina import Nomina
+from nominas.modelos.nomina import Nomina4
 
 
 
-class NominaOrdinaria():
+
+
+class NominaOrdinariaBase(Nomina, Nomina4):
 
     def __init__(self, ruta):
-        self.ruta = ruta
-        
 
-    def recuperar_timbres(self):
-        """Recupera archivos xml de la nomina"""
+        self.ruta_nominas = ruta
 
-        self.rutas_timbres_ord = list()
-
-        for ruta, carpetas, archivos in os.walk(self.ruta, topdown = True):  
-
-            for archivo in archivos:
-
-                carpeta_de_nomina = ruta.split("\\")[3]
-                extencion = os.path.splitext(archivo)
-
-                if carpeta_de_nomina.split("_")[0] == 'ORDINARIA':
-
-                    if extencion[-1] == '.xml':
-                        self.rutas_timbres_ord.append(archivo)
-
-    def crear_log(self):
-
+        Nomina.__init__(self, self.ruta_nominas)
         self.recuperar_timbres()
+        self.recuperar_txt()
 
-        
-        hoja_activa = 0
-        columna_inicial = 1
-        fila = 1
-        datos_lista = [self.rutas_timbres_ord]
+        Nomina4.__init__(self, self.ruta_nominas)
+        self.recuperar_timbres_nom4()
+        self.recuperar_txt_nom4()
 
-        log = Log()
-        log.escribir_titulo("Archivo", fila, hoja_activa)
-        log.escribir_en_hoja(datos_lista, columna_inicial, hoja_activa)
-        log.guardar_archivo_log(asksaveasfilename())
-
-       
-        print("Terminado")
-
-
-
-
-    def recuperar_txt(self):
+    def validar(self):
         pass
-
-class NominaComplementaria(NominaOrdinaria):
-    pass
+        
+    
+        
