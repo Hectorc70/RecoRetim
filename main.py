@@ -1,7 +1,7 @@
 from tkinter.filedialog import askdirectory
 
 from carpetas import CarpetaNomina
-from archivos.rutas import Rutas
+from archivos.ayuda.rutas import Rutas
 
 
 def obtener_rutas_archivos():
@@ -9,9 +9,9 @@ def obtener_rutas_archivos():
 
 def obtener_documentos():
     Rutas(askdirectory())
-
+    
 
 #obtener_rutas_archivos()
 
-obtener_rutas_archivos()
+obtener_documentos()
 
