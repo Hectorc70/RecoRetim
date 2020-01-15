@@ -9,7 +9,7 @@ def obtener_rutas_archivos():
     
 def lectura_excel():
     iq = ArchivoIQ()
-    iq.leer()
+    iq.extraer_control()
 #obtener_rutas_archivos()
 
 lectura_excel()

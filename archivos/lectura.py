@@ -16,14 +16,28 @@ class ArchivoIQ(Archivo_excel):
 
         self.ruta = rutas_lectura['IQ']
         Archivo_excel.__init__(self, self.ruta)
+        self.hoja = 0                                      #Hoja de lectura
+        self.fila = 2                                      #Fila que omite la lectura
 
-    def leer(self):
-        
-        self.leer_titulos(0, 1)
-        print(self.titulos_columnas)        
+        self.leer_titulos(self.hoja, 2)
+
+    def extraer_control(self):
+        """Almacena el Numero de control del IQ"""
 
 
+        self.control = list() 
+       
+        COLUMNA = self.claves_columnas['No. Control']    #Columna que lee
 
+        hoja_lectura = self.hojas_lista[self.hoja] 
+        titulos = hoja_lectura[COLUMNA]
+
+        for titulo in range(self.fila, len(titulos)):       
+             
+            self.control.append([titulos[titulo].value])
+
+      
+        self.cerrar_doc()
 
 class ArchivoRetimbre(Archivo_excel):
     """lee layout excel para el retimbre"""
