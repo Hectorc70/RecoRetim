@@ -7,7 +7,7 @@ class Rutas():
 
 	def __init__(self, ruta):
 		self.ruta_obtener_carpeta = ruta
-		self.recuperar_rutas()
+		
 	 
 	def recuperar_rutas(self):
 		"""Recupera las Rutas de los archivos que contienen los datos"""     
@@ -59,6 +59,8 @@ class Rutas():
 						ruta_completa = ruta.replace("/", "\\") + "\\" + documento
 						self.archivos_excel["OTRO"] = ruta_completa
 
+						
+		return self.archivos_excel
 		
 					
 

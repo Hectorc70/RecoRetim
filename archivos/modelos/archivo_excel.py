@@ -5,18 +5,14 @@ from openpyxl import load_workbook
 from openpyxl import workbook
 
 
-from rutas import Rutas
+class Archivo_excel():
 
-
-
-class Archivo_excel(Rutas):
-	"""Lee el archivo de Recalculo"""
+	"""Lee el archivo excel"""
 
 	def __init__(self, documento):
-		Rutas.__init__(self)
-		self.documento = documento
 
-		self.ruta = self.rutas[self.documento]
+		self.ruta = documento
+
 		self.abrir_documento()
 		self.obtener_hojas()
 
@@ -56,7 +52,7 @@ class Archivo_excel(Rutas):
 		self.obtener_claves_celdas(hoja)
 
 		#LLama al metodo que obtiene los titulos cccn del IQ
-		if self.documento == 'IQ':
+		if self.ruta.split("\\")[-1].split("_")[0] == 'IQ':
 			self.leer_titulos_ccn_iq(hoja, self.linea_ccn)
 
 
@@ -123,7 +119,7 @@ class Archivo_excel(Rutas):
 
 
 
-	def leer_titulos_ccn_iq(self,hoja,linea):
+	def leer_titulos_ccn_iq(self, hoja, linea):
 		"""Obtiene los titulos del IQ NUMEROS DE CONCEPTOS
 		   de Nómina"""
 		self.titulos_ccn = {}
@@ -131,7 +127,7 @@ class Archivo_excel(Rutas):
 		self.obtener_claves_celdas_ccn(hoja)
 
 		if type(self.hoja) is str:
-			hoja = hojas_nombres[self.hoja]
+			hoja = self.hojas_nombres[self.hoja]
 			titulos = hoja[linea]
 
 			for titulo in range(len(titulos)):
