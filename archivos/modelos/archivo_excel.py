@@ -93,9 +93,8 @@ class Archivo_excel():
 				 celda_nombres_clv) in self.titulos_columnas.items():
 
 					celda          = str(celda_nombres_clv).split(".")[-1][:-2]
-					self.claves_columnas[celda_text.strip(' ')]  = celda.strip('>')
-					#fila_sum    = int(self.linea_i) + 1
-					self.columnas_i [celda_text.strip(' ')] = self.linea_i
+					self.claves_columnas[celda_text.strip(' ')]  = celda.strip('>')		#Clave de la columna 					
+					self.columnas_i [celda_text.strip(' ')] = self.linea_i			#fila inicial de lectura
 
 		elif type(hoja) == int and type(hoja) != float:
 			columna_max = self.hojas_lista[hoja].max_column
@@ -104,9 +103,8 @@ class Archivo_excel():
 			for (celda_text, celda_nombres_clv) in self.titulos_columnas.items():
 
 					celda          = str(celda_nombres_clv).split(".")[-1][:-2]
-					self.claves_columnas[celda_text.strip(' ')]  = celda.strip('>')
-					#fila_sum    = int(self.linea_i) + 1
-					self.columnas_i [celda_text.strip(' ')] = self.linea_i
+					self.claves_columnas[celda_text.strip(' ')]  = celda.strip('>')		#Clave de la columna
+					self.columnas_i [celda_text.strip(' ')] = self.linea_i			#Fila donde se empieza a leer
 
 
 
@@ -114,15 +112,15 @@ class Archivo_excel():
 
 
 
-	def leer_titulos_ccn_iq(self, hoja, linea):
+	def leer_titulos_ccn_iq(self, hoja_lectura, linea):
 		"""Obtiene los titulos del IQ NUMEROS DE CONCEPTOS
 		   de Nómina"""
 		self.titulos_ccn = {}
 
-		self.obtener_claves_celdas_ccn(hoja)
+		
 
-		if type(self.hoja) is str:
-			hoja = self.hojas_nombres[self.hoja]
+		if type(hoja_lectura) is str:
+			hoja = self.hojas_nombres[hoja_lectura]
 			titulos = hoja[linea]
 
 			for titulo in range(len(titulos)):
@@ -131,27 +129,29 @@ class Archivo_excel():
 
 
 
-		elif type(self.hoja) is int:
+		elif type(hoja_lectura) is int:
 
-			hoja = self.hojas_lista[hoja]
+			hoja = self.hojas_lista[hoja_lectura]
 			titulos = hoja[linea]
 
 			for titulo in range(len(titulos)):
 				if titulos[titulo].value is not None:
 					self.titulos_ccn[titulos[titulo].value] = titulos[titulo]
 
-	def obtener_claves_celdas_ccn(self,hoja):
+
+		self.obtener_claves_celdas_ccn(hoja_lectura)
+
+
+	def obtener_claves_celdas_ccn(self, hoja):
 
 		self.columnas_ccn     = {}
 		self.columnas_i_ccn = {}
 
-		self.hoja = hoja
 
 
-
-		if type(self.hoja) is str :
-			columna_max = self.hojas_nombres[self.hoja].max_column
-			fila_max 	 = self.hojas_nombres[self.hoja].max_row
+		if type(hoja) is str :
+			columna_max = self.hojas_nombres[hoja].max_column
+			fila_max 	 = self.hojas_nombres[hoja].max_row
 
 			for (celda_text,
 				 celda_nombres_clv) in self.titulos_ccn.items():
@@ -159,26 +159,22 @@ class Archivo_excel():
 				celd = str(celda_text)
 
 				celda= str(celda_nombres_clv).split(".")[-1][:-2]
-				self.columnas_ccn[celd.strip(' ')]  = celda.strip('>')
-					#fila_sum    = int(self.linea_i) + 1
-				self.columnas_i_ccn [celd.strip(' ')] = self.linea_i
+				self.columnas_ccn[celd.strip(' ')]  = celda.strip('>')   #Claves de las columnas				
+				self.columnas_i_ccn [celd.strip(' ')] = self.linea_i	#fila inicial de lectura
 
-		elif type(self.hoja) == int and type(self.hoja) != float:
-			columna_max = self.hojas_lista[self.hoja].max_column
-			fila_max 	 = self.hojas_lista[self.hoja].max_row
+		elif type(hoja) == int and type(hoja) != float:
+			columna_max = self.hojas_lista[hoja].max_column
+			fila_max 	 = self.hojas_lista[hoja].max_row
 
-			for (celda_text,
-				 celda_nombres_clv) in self.titulos_ccn.items():
+			for (celda_text, celda_nombres_clv) in self.titulos_ccn.items():
 
 				celd = str(celda_text)
-
 				celda          = str(celda_nombres_clv).split(".")[-1][:-2]
-				self.columnas_ccn[celd.strip(' ')]  = celda.strip('>')
-				#fila_sum    = int(self.linea_i) + 1
-				self.columnas_i_ccn [celd.strip(' ')] = self.linea_i
-		#print(self.columnas_ccn)
+				self.columnas_ccn[celd.strip(' ')]  = celda.strip('>')		#Claves de las columnas				
+				self.columnas_i_ccn [celd.strip(' ')] = self.linea_i		#fila inicial de lectura
+		
 
-		#print(self.columnas_ccn)
+		
 		
 	def cerrar_doc(self):
 		self.documento_open.close()
