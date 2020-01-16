@@ -9,47 +9,27 @@ class CarpetaNomina():
     def __init__(self, ruta):
         self.ruta_obtener_carpeta = ruta
         self.ejecutar_nominas()
-    
+
 
     def ejecutar_nominas(self):
-        """Recupera las carpeta de las nominas""" 
+        """Recupera las carpeta de las nominas"""
 
         self.carpetas_nom = dict()
-       
-        
 
-        for ruta, carpetas, documentos in os.walk(self.ruta_obtener_carpeta,topdown = True):                      
-          
-            
+
+
+        for ruta, carpetas, documentos in os.walk(self.ruta_obtener_carpeta,topdown = True):
+
+
             for tipo_de_nomina in carpetas:
                 ruta_completa_nomina = ruta.replace("/", "\\") + "\\" + tipo_de_nomina
 
                 if tipo_de_nomina.split("_")[0] == "ORDINARIA":
                     nom_base = NominaOrdinariaBase(ruta_completa_nomina)
 
-                    
+
 
                 nomina_mayusc = tipo_de_nomina.upper()
-                self.carpetas_nom[ nomina_mayusc] = ruta_completa_nomina
+                self.carpetas_nom[nomina_mayusc] = ruta_completa_nomina
 
-        return self.carpetas_nom    
-            
-
-                
-
-                
-
-                    
-
-    
-    
-              
-
-                        
-
-
-
-
-        
-
-
+        return self.carpetas_nom

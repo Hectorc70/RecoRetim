@@ -19,7 +19,7 @@ class ArchivoIQ(Archivo_excel):
         self.hoja = 0
         self.hoja_lectura = self.hojas_lista[self.hoja]        #Hoja de lectura                     
 
-        self.leer_titulos(0, 2)
+        self.leer_titulos(self.hoja, 2)
 
     def extraer_control(self):
         """Almacena el Numero de control del IQ"""
@@ -146,6 +146,74 @@ class ArchivoIQ(Archivo_excel):
         else:
             pass
     
+
+
+
+
+class ReporteSap(Archivo_excel):
+
+    def __init__(self):
+        
+        self.ruta = rutas_lectura['REPORTE_SAP']
+        Archivo_excel.__init__(self, self.ruta)
+
+        self.hoja = 0
+        self.hoja_lectura = self.hojas_lista[self.hoja]
+
+        self.leer_titulos(self.hoja, 1)
+
+    def obtener_control(self):
+
+        self.control = list() 
+       
+        COLUMNA = self.claves_columnas['NO CONTROL']    #Columna que lee
+        FILA    = self.columnas_i['NO CONTROL']         #Fila que omite la lectura
+                
+        titulos =  self.hoja_lectura[COLUMNA]
+
+        for titulo in range(FILA, len(titulos)):       
+             
+            self.control.append([titulos[titulo].value])
+
+        return self.control
+
+
+    def obtener_nom1(self):
+
+        self.nom1 = list() 
+       
+        COLUMNA = self.claves_columnas['NOM1']    #Columna que lee
+        FILA    = self.columnas_i['NOM1']         #Fila que omite la lectura
+                
+        titulos =  self.hoja_lectura[COLUMNA]
+
+        for titulo in range(FILA, len(titulos)):       
+             
+              self.nom1.append([titulos[titulo].value])
+
+        return self.nom4
+    
+    def obtener_nom4(self):
+
+        self.nom4 = list() 
+       
+        COLUMNA = self.claves_columnas['NOM4']    #Columna que lee
+        FILA    = self.columnas_i['NOM4']         #Fila que omite la lectura
+                
+        titulos =  self.hoja_lectura[COLUMNA]
+
+        for titulo in range(FILA, len(titulos)):       
+             
+              self.nom4.append([titulos[titulo].value])
+
+        return self.nom4
+
+
+
+
+
+
+
 
 
 

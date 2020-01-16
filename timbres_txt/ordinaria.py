@@ -4,8 +4,8 @@ import os.path
 from tkinter.filedialog import asksaveasfilename
 from os.path import splitext
 
-from nominas.modelos.nomina import Nomina
-from nominas.modelos.nomina import Nomina4
+from timbres_txt.modelos.nomina import Nomina
+from timbres_txt.modelos.nomina import Nomina4
 
 
 

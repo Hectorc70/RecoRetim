@@ -2,7 +2,8 @@ import os
 import os.path
 from tkinter.filedialog import asksaveasfilename
 from os.path import splitext
-from nominas.ayuda.log import Log
+
+from timbres_txt.ayuda.log import Log
 
 
 
@@ -31,8 +32,9 @@ class Nomina:
 
                     if extencion[-1] == '.xml':
                         ruta_completa = ruta + "\\" + archivo
+                        self.control_nom1 = lambda 
                         self.rutas_timbres_ord.append(ruta_completa)
-
+    
 
 
     def recuperar_txt(self):
