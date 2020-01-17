@@ -17,7 +17,8 @@ class Nomina:
     def recuperar_timbres(self):
         """Recupera archivos xml(TIMBRES de los CFDI) de la nomina"""
 
-        self.rutas_timbres_ord = list()
+        self.rutas_timbres_ord   = list()
+        self.control_timbres_ord = list()
 
         for ruta, carpetas, archivos in os.walk(self.ruta, topdown = True):  
 
@@ -32,8 +33,12 @@ class Nomina:
 
                     if extencion[-1] == '.xml':
                         ruta_completa = ruta + "\\" + archivo
-                        self.control_nom1 = lambda 
+                        control = archivo.split("_")[0]
+
+                        self.control_timbres_ord.append(int(control))
                         self.rutas_timbres_ord.append(ruta_completa)
+        
+        return self.control_timbres_ord, self.rutas_timbres_ord
     
 
 
@@ -41,6 +46,8 @@ class Nomina:
         """Recupera archivos txt(CFDI) de la nomina"""
 
         self.rutas_cfdi_ord = list()
+        self.control_cfdi_ord = list()
+
 
         for ruta, carpetas, archivos in os.walk(self.ruta, topdown = True):  
 
@@ -55,30 +62,12 @@ class Nomina:
 
                     if extencion[-1] == '.txt':
                         ruta_completa = ruta + "\\" + archivo
+                        control = archivo.split("_")[0]   
+
+                        self.control_cfdi_ord.append(control)
                         self.rutas_cfdi_ord.append(ruta_completa)
 
-
-
-
-
-    def crear_log(self):
-
-        self.recuperar_timbres()
-
-        
-        hoja_activa = 0
-        columna_inicial = 1
-        fila = 1
-        datos_lista = [self.rutas_timbres_ord]
-
-        log = Log()
-        log.escribir_titulo("Archivo", fila, hoja_activa)
-        log.escribir_en_hoja(datos_lista, columna_inicial, hoja_activa)
-        log.guardar_archivo_log(asksaveasfilename())
-
-       
-        print("Terminado")
-
+        return self.control_cfdi_ord, self.rutas_cfdi_ord
 
 
 class Nomina4():
@@ -92,8 +81,8 @@ class Nomina4():
         """Recupera archivos xml(TIMBRES de los CFDI) de la nomina4 de los
             empleados"""
 
-        self.rutas_timbres4 = list()
-
+        self.rutas_timbres4   = list()
+        self.control_timbres4 = list()
         for ruta, carpetas, archivos in os.walk(self.ruta, topdown = True):  
 
             for archivo in archivos:
@@ -107,13 +96,19 @@ class Nomina4():
 
                     if extencion[-1] == '.xml':
                         ruta_completa = ruta + "\\" + archivo
+                        control = archivo.split("_")[0]
+
+                        self.control_timbres4.append(control)
                         self.rutas_timbres4.append(ruta_completa)
+        
+        return self.control_timbres4, self.rutas_timbres4
     
 
     def recuperar_txt_nom4(self):
         """Recupera archivos txt(CFDI) de la nomina 4"""       
 
         self.rutas_cfdi4 = list()
+        self.control_cfdi4 = list()
 
 
 
@@ -130,7 +125,12 @@ class Nomina4():
 
                     if extencion[-1] == '.txt':
                         ruta_completa = ruta + "\\" + archivo
+                        control = archivo.split("_")[0]
+
+                        self.control_cfdi4.append(control)
                         self.rutas_cfdi4.append(ruta_completa)
+
+        return self.control_cfdi4, self.rutas_cfdi4
 
 class NominaConfianza():
     """NOMINA DE CONFIANZA TICKET 5"""
@@ -146,6 +146,7 @@ class NominaConfianza():
            de los empleados"""
 
         self.rutas_timbres5 = list()
+        self.control_timbres5 = list()
 
         for ruta, carpetas, archivos in os.walk(self.ruta, topdown = True):  
 
@@ -160,14 +161,19 @@ class NominaConfianza():
 
                     if extencion[-1] == '.xml':
                         ruta_completa = ruta + "\\" + archivo
+                        control = archivo.split("_")[0]
+
+                        self.control_timbres5.append(control)
                         self.rutas_timbres5.append(ruta_completa)
+
+        return self.control_timbres5, self.rutas_timbres5
     
 
     def recuperar_txt_nom5(self):
         """Recupera archivos txt(CFDI) de la nomina de confianza"""       
 
         self.rutas_cfdi5 = list()
-
+        self.control_cfdi5 = list()
 
 
         for ruta, carpetas, archivos in os.walk(self.ruta, topdown = True):  
@@ -183,6 +189,11 @@ class NominaConfianza():
 
                     if extencion[-1] == '.txt':
                         ruta_completa = ruta + "\\" + archivo
+                        control = archivo.split("_")[0]
+
+                        self.control_cfdi5.append(control)
                         self.rutas_cfdi5.append(ruta_completa)
+
+        return self.control_cfdi5, self.rutas_cfdi5
 
 

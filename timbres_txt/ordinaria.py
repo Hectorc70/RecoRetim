@@ -17,16 +17,21 @@ class NominaOrdinariaBase(Nomina, Nomina4):
 
         self.ruta_nominas = ruta
 
+        
+    def nomina1():
+
         Nomina.__init__(self, self.ruta_nominas)
         self.recuperar_timbres()
         self.recuperar_txt()
 
+        
+
+    def nomina4(self):
+
         Nomina4.__init__(self, self.ruta_nominas)
         self.recuperar_timbres_nom4()
         self.recuperar_txt_nom4()
-
-    def validar(self):
-        pass
+        
         
     
         

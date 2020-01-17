@@ -1,5 +1,5 @@
 import os
-from nominas.ordinaria import NominaOrdinariaBase
+from timbres_txt.ordinaria import NominaOrdinariaBase 
 
 
 class CarpetaNomina():
@@ -8,10 +8,10 @@ class CarpetaNomina():
 
     def __init__(self, ruta):
         self.ruta_obtener_carpeta = ruta
-        self.ejecutar_nominas()
+        self.recuperar_nominas()
 
 
-    def ejecutar_nominas(self):
+    def recuperar_nominas(self):
         """Recupera las carpeta de las nominas"""
 
         self.carpetas_nom = dict()
