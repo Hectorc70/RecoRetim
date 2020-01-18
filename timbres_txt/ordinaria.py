@@ -18,10 +18,10 @@ class NominaOrdinariaBase(Nomina, Nomina4):
         self.ruta_nominas = ruta
 
         
-    def nomina1():
+    def nomina1(self):
 
         Nomina.__init__(self, self.ruta_nominas)
-        self.recuperar_timbres()
+        return self.recuperar_timbres()
         self.recuperar_txt()
 
         

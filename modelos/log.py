@@ -15,7 +15,7 @@ class Log:
 
     def __init__(self, titulo_hoja_default = "Hoja 1"):
 
-        self.crear_archivo_xlsx()
+        self.abrir_documento()
         self.wb.active       = 0
         self.wb.active.title = str(titulo_hoja_default)
 
@@ -30,6 +30,14 @@ class Log:
 
 
         self.wb = Workbook()
+
+    def abrir_documento(self, ruta):
+        self.ruta = ruta
+		self.wb =  load_workbook(self.ruta)
+        
+		print("Se Abrio el documento: ",
+		 	  self.ruta.split("\\")[-1])
+ 
 
 
     def crear_hoja_nueva(self, nombre_hoja_nueva):
