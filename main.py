@@ -4,6 +4,7 @@ import os
 from timbres_txt.nomina import Nomina, Nomina4
 from modelos.log import Log
 from modelos.rutas_trabajo import Rutas
+from archivos.lectura import ArchivoIQ
 
 
 class ArchivoLayout():
