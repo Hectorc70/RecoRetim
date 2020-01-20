@@ -12,8 +12,7 @@ class Archivo_excel():
 	def __init__(self, documento):
 
 		self.ruta = documento
-		self.wb.active       = 0
-        self.wb.active.title = str(titulo_hoja_default)
+		
 
 		self.abrir_documento()
 		self.obtener_hojas()
@@ -176,45 +175,3 @@ class Archivo_excel():
 				self.columnas_i_ccn [celd.strip(' ')] = self.linea_i		#fila inicial de lectura
 		
 
-		
-	def escribir_en_hoja(self, contenido_lista, col, hoja_activa, fila_ini=1):
-        """Escribe en la hoja que esta activa"""
-
-        self.wb.active =  hoja_activa
-
-        if type(contenido_lista) is list and len(contenido_lista) == 1:
-            for conte in contenido_lista:
-                
-                for texto in conte:
-
-                    fila_ini +=1
-                    texto_celda = self.wb.active.cell(row = fila_ini, column = col)
-                    texto_celda.value = (texto)
-
-        elif type(contenido_lista) is list and  len(contenido_lista) >= 2:
-            self.escribir_varias_columnas(hoja_activa, contenido_lista, col, fila_ini)
-			
-
-	 def escribir_varias_columnas(self, hoja_activa, listas, col, fila):
-
-        self.wb.active = hoja_activa
-        col = 0
-        for conte in listas:
-            col +=1
-            fila = 1
-            
-            if type(conte) is list:               
-                for texto in conte:
-                    fila +=1                      
-
-                    #print(texto,"|fila|",fila, "|columna|",col)
-
-                    texto_celda = self.wb.active.cell(row = fila, column = col)
-                    texto_celda.value = (texto)        
-                
-                #print("leyendo Otra Lista")
-            else:
-                print("Escritas todas las columnas")
-
-	def cerrar_doc(self):
-		self.documento_open.close()
