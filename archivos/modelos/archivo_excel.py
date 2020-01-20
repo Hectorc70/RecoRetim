@@ -5,18 +5,15 @@ from openpyxl import load_workbook
 from openpyxl import workbook
 
 
-from rutas import Rutas
+class Archivo_excel():
 
-
-
-class Archivo_excel(Rutas):
-	"""Lee el archivo de Recalculo"""
+	"""Lee el archivo excel"""
 
 	def __init__(self, documento):
-		Rutas.__init__(self)
-		self.documento = documento
 
-		self.ruta = self.rutas[self.documento]
+		self.ruta = documento
+		
+
 		self.abrir_documento()
 		self.obtener_hojas()
 
@@ -46,17 +43,16 @@ class Archivo_excel(Rutas):
 
 
 
-	def leer_titulos(self,hoja, linea):
+	def leer_titulos(self, hoja, linea):
 		"""Obtiene titulos de columnas del
 			archivo que se abre"""
 
 		self.linea_i = linea
 		self.linea_ccn = self.linea_i -1
 		self.titulos_columnas = {}
-		self.obtener_claves_celdas(hoja)
-
+		self.hoja = hoja 
 		#LLama al metodo que obtiene los titulos cccn del IQ
-		if self.documento == 'IQ':
+		if self.ruta.split("\\")[-1].split("_")[0] == 'IQ':
 			self.leer_titulos_ccn_iq(hoja, self.linea_ccn)
 
 
@@ -81,41 +77,35 @@ class Archivo_excel(Rutas):
 				if titulos[titulo].value is not None:
 					self.titulos_columnas[titulos[titulo].value] = titulos[titulo]
 
+		self.obtener_claves_celdas(self.hoja)
 
 
 
-	def obtener_claves_celdas(self,hoja):
+	def obtener_claves_celdas(self, hoja):
 
 		self.claves_columnas     = {}
 		self.columnas_i = {}
 
-		self.hoja = hoja
-
-
-
-		if type(self.hoja) is str :
-			columna_max = self.hojas_nombres[self.hoja].max_column
-			fila_max 	 = self.hojas_nombres[self.hoja].max_row
+		if type(hoja) is str :
+			columna_max = self.hojas_nombres[hoja].max_column
+			fila_max 	 = self.hojas_nombres[hoja].max_row
 
 			for (celda_text,
 				 celda_nombres_clv) in self.titulos_columnas.items():
 
 					celda          = str(celda_nombres_clv).split(".")[-1][:-2]
-					self.claves_columnas[celda_text.strip(' ')]  = celda.strip('>')
-					#fila_sum    = int(self.linea_i) + 1
-					self.columnas_i [celda_text.strip(' ')] = self.linea_i
+					self.claves_columnas[celda_text.strip(' ')]  = celda.strip('>')		#Clave de la columna 					
+					self.columnas_i [celda_text.strip(' ')] = self.linea_i			#fila inicial de lectura
 
-		elif type(self.hoja) == int and type(self.hoja) != float:
-			columna_max = self.hojas_lista[self.hoja].max_column
-			fila_max 	 = self.hojas_lista[self.hoja].max_row
+		elif type(hoja) == int and type(hoja) != float:
+			columna_max = self.hojas_lista[hoja].max_column
+			fila_max 	 = self.hojas_lista[hoja].max_row
 
-			for (celda_text,
-				 celda_nombres_clv) in self.titulos_columnas.items():
+			for (celda_text, celda_nombres_clv) in self.titulos_columnas.items():
 
 					celda          = str(celda_nombres_clv).split(".")[-1][:-2]
-					self.claves_columnas[celda_text.strip(' ')]  = celda.strip('>')
-					#fila_sum    = int(self.linea_i) + 1
-					self.columnas_i [celda_text.strip(' ')] = self.linea_i
+					self.claves_columnas[celda_text.strip(' ')]  = celda.strip('>')		#Clave de la columna
+					self.columnas_i [celda_text.strip(' ')] = self.linea_i			#Fila donde se empieza a leer
 
 
 
@@ -123,15 +113,15 @@ class Archivo_excel(Rutas):
 
 
 
-	def leer_titulos_ccn_iq(self,hoja,linea):
+	def leer_titulos_ccn_iq(self, hoja_lectura, linea):
 		"""Obtiene los titulos del IQ NUMEROS DE CONCEPTOS
 		   de Nómina"""
 		self.titulos_ccn = {}
 
-		self.obtener_claves_celdas_ccn(hoja)
+		
 
-		if type(self.hoja) is str:
-			hoja = hojas_nombres[self.hoja]
+		if type(hoja_lectura) is str:
+			hoja = self.hojas_nombres[hoja_lectura]
 			titulos = hoja[linea]
 
 			for titulo in range(len(titulos)):
@@ -140,27 +130,29 @@ class Archivo_excel(Rutas):
 
 
 
-		elif type(self.hoja) is int:
+		elif type(hoja_lectura) is int:
 
-			hoja = self.hojas_lista[hoja]
+			hoja = self.hojas_lista[hoja_lectura]
 			titulos = hoja[linea]
 
 			for titulo in range(len(titulos)):
 				if titulos[titulo].value is not None:
 					self.titulos_ccn[titulos[titulo].value] = titulos[titulo]
 
-	def obtener_claves_celdas_ccn(self,hoja):
+
+		self.obtener_claves_celdas_ccn(hoja_lectura)
+
+
+	def obtener_claves_celdas_ccn(self, hoja):
 
 		self.columnas_ccn     = {}
 		self.columnas_i_ccn = {}
 
-		self.hoja = hoja
 
 
-
-		if type(self.hoja) is str :
-			columna_max = self.hojas_nombres[self.hoja].max_column
-			fila_max 	 = self.hojas_nombres[self.hoja].max_row
+		if type(hoja) is str :
+			columna_max = self.hojas_nombres[hoja].max_column
+			fila_max 	 = self.hojas_nombres[hoja].max_row
 
 			for (celda_text,
 				 celda_nombres_clv) in self.titulos_ccn.items():
@@ -168,26 +160,18 @@ class Archivo_excel(Rutas):
 				celd = str(celda_text)
 
 				celda= str(celda_nombres_clv).split(".")[-1][:-2]
-				self.columnas_ccn[celd.strip(' ')]  = celda.strip('>')
-					#fila_sum    = int(self.linea_i) + 1
-				self.columnas_i_ccn [celd.strip(' ')] = self.linea_i
+				self.columnas_ccn[celd.strip(' ')]  = celda.strip('>')   #Claves de las columnas				
+				self.columnas_i_ccn [celd.strip(' ')] = self.linea_i	#fila inicial de lectura
 
-		elif type(self.hoja) == int and type(self.hoja) != float:
-			columna_max = self.hojas_lista[self.hoja].max_column
-			fila_max 	 = self.hojas_lista[self.hoja].max_row
+		elif type(hoja) == int and type(hoja) != float:
+			columna_max = self.hojas_lista[hoja].max_column
+			fila_max 	 = self.hojas_lista[hoja].max_row
 
-			for (celda_text,
-				 celda_nombres_clv) in self.titulos_ccn.items():
+			for (celda_text, celda_nombres_clv) in self.titulos_ccn.items():
 
 				celd = str(celda_text)
-
 				celda          = str(celda_nombres_clv).split(".")[-1][:-2]
-				self.columnas_ccn[celd.strip(' ')]  = celda.strip('>')
-				#fila_sum    = int(self.linea_i) + 1
-				self.columnas_i_ccn [celd.strip(' ')] = self.linea_i
-		#print(self.columnas_ccn)
-
-		#print(self.columnas_ccn)
+				self.columnas_ccn[celd.strip(' ')]  = celda.strip('>')		#Claves de las columnas				
+				self.columnas_i_ccn [celd.strip(' ')] = self.linea_i		#fila inicial de lectura
 		
-	def cerrar_doc(self):
-		self.documento_open.close()
+
