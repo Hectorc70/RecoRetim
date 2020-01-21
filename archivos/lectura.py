@@ -1,20 +1,20 @@
 from tkinter.filedialog import askdirectory
 
 from archivos.modelos.archivo_excel import Archivo_excel
-from archivos.ayuda.rutas_trabajo import Rutas
+#rom archivos.ayuda.rutas_trabajo import Rutas
 
 
 
 
-archivo = Rutas(askdirectory()) 
-rutas_lectura = archivo.recuperar_rutas()
+#archivo = Rutas(askdirectory()) 
+#rutas_lectura = archivo.recuperar_rutas()
 
 class ArchivoIQ(Archivo_excel):
     "ARCHIVO IQ"
 
-    def __init__(self):
+    def __init__(self, ruta_iq):
 
-        self.ruta = rutas_lectura['IQ']
+        self.ruta = ruta_iq
         Archivo_excel.__init__(self, self.ruta)
         self.hoja = 0
         self.hoja_lectura = self.hojas_lista[self.hoja]        #Hoja de lectura                     
@@ -36,8 +36,9 @@ class ArchivoIQ(Archivo_excel):
              
             self.control.append([titulos[titulo].value])
 
+        return self.control
       
-        self.cerrar_doc()
+        
     def extraer_ccn_1401(self):
 
         self.ccn_1401 = list() 
@@ -55,6 +56,9 @@ class ArchivoIQ(Archivo_excel):
                 self.ccn_1401.append([titulos[titulo].value])
         else:
             pass
+
+        return self.ccn_1401
+
     def extraer_ccn_1409(self):
 
         self.ccn_1409 = list() 
@@ -72,6 +76,8 @@ class ArchivoIQ(Archivo_excel):
                 self.ccn_1409.append([titulos[titulo].value])
         else:
             pass
+
+        return self.ccn_1409
 
     def extraer_ccn_2240(self):
 
@@ -91,6 +97,9 @@ class ArchivoIQ(Archivo_excel):
         else:
             pass
 
+
+        return self.ccn_2240
+
     def extraer_ccn_2566(self):
         self.ccn_2566 = list() 
         titulo = '2566'
@@ -107,6 +116,8 @@ class ArchivoIQ(Archivo_excel):
                 self.ccn_2566.append([titulos[titulo].value])
         else:
             pass
+
+        return self.ccn_2566
 
         
     def extraer_ccn_481(self):
@@ -127,6 +138,8 @@ class ArchivoIQ(Archivo_excel):
         else:
             pass
 
+        return self.ccn_481
+
 
     def extraer_ccn_559(self):
         
@@ -145,6 +158,8 @@ class ArchivoIQ(Archivo_excel):
                 self.ccn_559.append([titulos[titulo].value])
         else:
             pass
+
+        return self.ccn_559
     
 
 

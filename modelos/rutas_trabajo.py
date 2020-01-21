@@ -31,7 +31,7 @@ class Rutas():
 						ruta_completa = ruta.replace("/", "\\") + "\\" + documento
 						self.archivos_excel["IQ"] = ruta_completa
 
-					elif extencion_archivo[0].split("_")[1] == "layout":
+					elif extencion_archivo[0].split("_")[0] == "Layout":
 						
 						ruta_completa = ruta.replace("/", "\\") + "\\" + documento
 						self.archivos_excel["TRABAJO"] = ruta_completa

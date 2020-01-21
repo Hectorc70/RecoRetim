@@ -78,10 +78,16 @@ class Log:
 				
 				for texto in conte:
 
-					fila_ini +=1
-					texto_celda = self.wb.active.cell(row = fila_ini, column = col)
-					texto_celda.value = (texto)
+					if type(texto) is list:
+						for text in texto:
+							fila_ini +=1
+							texto_celda = self.wb.active.cell(row = fila_ini, column = col)
+							texto_celda.value = (text)
+					else:
 
+						fila_ini +=1
+						texto_celda = self.wb.active.cell(row = fila_ini, column = col)
+						texto_celda.value = (texto)
 		elif type(contenido_lista) is list and  len(contenido_lista) >= 2:
 			self.escribir_varias_columnas(hoja_activa, contenido_lista, col, fila_ini)
 
