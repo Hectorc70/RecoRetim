@@ -1,12 +1,11 @@
-from tkinter.filedialog import askdirectory, asksaveasfile
+from tkinter.filedialog import askdirectory, asksaveasfilename
 import os
 
 from timbres_txt.nomina import Nomina, Nomina4
 from modelos.log import Log
 from modelos.rutas_trabajo import Rutas
 from archivos.lectura import ArchivoIQ
-from modelos.archivos_excel import comprobar
-from modelos.archivos_excel import ArchivoExcelAbrir, ArchivoExcelEscribir
+from modelos.archivos_excel import ArchivoExcel
 
 
 
@@ -16,30 +15,35 @@ class ArchivoLayout():
         rutas               = Rutas(askdirectory())
         self.rutas_trabajo = rutas.recuperar_rutas()
 
-        self.excel = ArchivoExcelAbrir(self.rutas_trabajo['TRABAJO'])
-
-        self.hojas = self.excel.obtener_hojas()
+        self.excel = ArchivoExcel(self.rutas_trabajo['TRABAJO'])
+        
    
     def escribir_layout (self):
-       for hoja_nombre, hoja_clave in self.hojas.items():
+       for hoja_nombre, hoja_clave in  self.excel.hojas[0].items():
            
             if hoja_nombre == 'hoja trabajo':
-               self.escribir_conceptos(hoja_nombre)
+               self.escribir_conceptos(hoja_nombre, hoja_clave)
 
 
-            elif hoja == '':
+            elif hoja_nombre == '':
                 pass
 
-    def escribir_conceptos(self, hoja): 
+    def escribir_conceptos(self, hoja, clave_hoja): 
 
         titulos = self.excel.leer_titulos(hoja, 1)
+        iq         = ArchivoIQ(self.rutas_trabajo['IQ'])
+
+
+        for titulo, clave_columna in titulos.items():
+            if titulo == 'Control':                
+                iq_control = [iq.extraer_control()]
+                self.excel.escribir_en_hoja(iq_control, clave_columna,
+                                             clave_hoja)
+
+                self.excel.guardar(asksaveasfilename())
+            
+                    
         
-        for clave_columna, titulo in titulos.items():
-            if titulo == 'Control':
-                iq         = ArchivoIQ(self.rutas_trabajo['IQ'])
-                excel_escribir = ArchivoExcelEscribir(self.rutas_trabajo['TRABAJO'])
-                
-        iq_control = iq.extraer_control()
         iq_1401    = iq.extraer_ccn_1401()
         iq_1409    = iq.extraer_ccn_1409()
         iq_2240    = iq.extraer_ccn_2240()
