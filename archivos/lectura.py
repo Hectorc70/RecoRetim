@@ -10,7 +10,7 @@ from archivos.modelos.archivo_excel import Archivo_excel
 #rutas_lectura = archivo.recuperar_rutas()
 
 class ArchivoIQ(Archivo_excel):
-    "ARCHIVO IQ"
+    "Extrae informacion del ARCHIVO IQ"
 
     def __init__(self, ruta_iq):
 
@@ -189,8 +189,8 @@ class ReporteSap(Archivo_excel):
         titulos =  self.hoja_lectura[COLUMNA]
 
         for titulo in range(FILA, len(titulos)):       
-             
-            self.control.append([titulos[titulo].value])
+            control = [titulos[titulo].value]
+            self.control.append(control[0])
 
         return self.control
 
@@ -205,10 +205,10 @@ class ReporteSap(Archivo_excel):
         titulos =  self.hoja_lectura[COLUMNA]
 
         for titulo in range(FILA, len(titulos)):       
-             
-              self.nom1.append([titulos[titulo].value])
+            nom1 = [titulos[titulo].value]
+            self.nom1.append(nom1[0])
 
-        return self.nom4
+        return self.nom1
     
     def obtener_nom4(self):
 
@@ -220,8 +220,8 @@ class ReporteSap(Archivo_excel):
         titulos =  self.hoja_lectura[COLUMNA]
 
         for titulo in range(FILA, len(titulos)):       
-             
-              self.nom4.append([titulos[titulo].value])
+            nom4 = [titulos[titulo].value]
+            self.nom4.append(nom4[0])
 
         return self.nom4
 

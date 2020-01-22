@@ -127,7 +127,7 @@ class ArchivoExcel:
 		if type(titulos) is list:
 			for text_titulo in titulos:
 
-				columna_ini += 1
+				col_ini += 1
 				titulo = self.wb.active.cell(row = fila , column = col_ini)
 				titulo.value = (text_titulo)
 
@@ -160,7 +160,10 @@ class ArchivoExcel:
 
 	
 	def escribir_varias_columnas(self, hoja_activa, listas, col, fila):
-		
+		"""SE DEBE PONER EL NUEMERO DE LA COLUMNA QUE ESTA OCUPADA EJEMPLO
+			O PARA QUE EMPIECE EN LA 1"""
+
+			
 		self.wb.active =  hoja_activa
 		
 		
