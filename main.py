@@ -30,19 +30,8 @@ class ArchivoLayout():
     def escribir_conceptos(self, hoja, clave_hoja): 
 
         titulos = self.excel.leer_titulos(hoja, 1)
-        iq         = ArchivoIQ(self.rutas_trabajo['IQ'])
-
-
-        for titulo, clave_columna in titulos.items():
-            if titulo == 'Control':                
-                iq_control = [iq.extraer_control()]
-                self.excel.escribir_en_hoja(iq_control, clave_columna,
-                                             clave_hoja)
-
-                self.excel.guardar(asksaveasfilename())
-            
-                    
-        
+        iq         = ArchivoIQ(self.rutas_trabajo['IQ'])                              
+        iq_control = [iq.extraer_control()]
         iq_1401    = iq.extraer_ccn_1401()
         iq_1409    = iq.extraer_ccn_1409()
         iq_2240    = iq.extraer_ccn_2240()
@@ -50,6 +39,23 @@ class ArchivoLayout():
         iq_481     = iq.extraer_ccn_481()
         iq_559     = iq.extraer_ccn_559()
 
+        Conceptos = [iq_1401, iq_1409, iq_2240, iq_2566, iq_481, iq_559]
+        for titulo, numero_columna in titulos.items():
+
+            if titulo == 'Control':
+                self.excel.escribir_en_hoja(iq_control, numero_columna,
+                                             clave_hoja)
+            elif titulo == 'UUID_NOM1':                 
+                self.excel.escribir_en_hoja(Conceptos, numero_columna,
+                                             clave_hoja)
+                
+        guardar_archivo = asksaveasfilename (title = "Guardar Archivo Retimbrado", 
+                                            filetypes = (("Libro Excel", "* .xlsx" ))) 
+        self.excel.guardar(guardar_archivo)
+            
+                    
+        
+        
     
 
     

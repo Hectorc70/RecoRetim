@@ -70,7 +70,7 @@ class ArchivoExcel:
 		self.claves_columnas = dict()
 
 		def obtener_claves_titulos(clave_titulo, texto_titulo):
-			
+			"""Solo cuando se quiere leer"""
 			
 			celda          = str(clave_titulo).split(".")[-1][:-2]
 			titulo         = texto_titulo[0]
@@ -78,7 +78,7 @@ class ArchivoExcel:
 			clave_depurada = celda.strip('>')		#Clave de la columna 					
 			
 			
-			return texto_depurado, clave_titulo
+			return texto_depurado, clave_depurada
 
 		
 		
@@ -89,12 +89,14 @@ class ArchivoExcel:
 			titulos = hoja[fila_de_lectura]
 			columna = 0
 			for titulo in range(len(titulos)):
+
 				if titulos[titulo].value is not None:
+
 					columna +=1
+
 					texto = [titulos[titulo].value] 
 					clave = titulos[titulo]
 					claves = obtener_claves_titulos(clave, texto)
-
 					self.claves_columnas [claves[0]] = columna
 
 					
@@ -161,12 +163,12 @@ class ArchivoExcel:
 		
 		self.wb.active =  hoja_activa
 		
-		col = 0
+		
 		for conte in listas:
 			col +=1
 			fila = 1
 			
-			if type(conte) is list:               
+			if type(conte) is list:              
 				for texto in conte:
 					fila +=1                      
 

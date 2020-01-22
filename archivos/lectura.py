@@ -32,9 +32,11 @@ class ArchivoIQ(Archivo_excel):
                 
         titulos =  self.hoja_lectura[COLUMNA]
 
-        for titulo in range(FILA, len(titulos)):       
-             
-            self.control.append([titulos[titulo].value])
+        for titulo in range(FILA, len(titulos)):            
+            
+            control = [titulos[titulo].value]
+            self.control.append(control[0])
+        
 
         return self.control
       
@@ -52,8 +54,8 @@ class ArchivoIQ(Archivo_excel):
             titulos =  self.hoja_lectura[COLUMNA]
 
             for titulo in range(FILA, len(titulos)):       
-                
-                self.ccn_1401.append([titulos[titulo].value])
+                ccn_1401 = [titulos[titulo].value]    
+                self.ccn_1401.append(ccn_1401[0])
         else:
             pass
 
@@ -72,8 +74,8 @@ class ArchivoIQ(Archivo_excel):
             titulos =  self.hoja_lectura[COLUMNA]
 
             for titulo in range(FILA, len(titulos)):       
-                
-                self.ccn_1409.append([titulos[titulo].value])
+                ccn_1409 = [titulos[titulo].value]
+                self.ccn_1409.append(ccn_1409[0])
         else:
             pass
 
@@ -92,8 +94,8 @@ class ArchivoIQ(Archivo_excel):
             titulos =  self.hoja_lectura[COLUMNA]
 
             for titulo in range(FILA, len(titulos)):       
-                
-                self.ccn_2240.append([titulos[titulo].value])
+                ccn_2240 = [titulos[titulo].value]
+                self.ccn_2240.append(ccn_2240[0])
         else:
             pass
 
@@ -112,8 +114,8 @@ class ArchivoIQ(Archivo_excel):
             titulos =  self.hoja_lectura[COLUMNA]
 
             for titulo in range(FILA, len(titulos)):       
-                
-                self.ccn_2566.append([titulos[titulo].value])
+                ccn_2566 = [titulos[titulo].value]
+                self.ccn_2566.append(ccn_2566[0])
         else:
             pass
 
@@ -133,8 +135,8 @@ class ArchivoIQ(Archivo_excel):
             titulos =  self.hoja_lectura[COLUMNA]
 
             for titulo in range(FILA, len(titulos)):       
-                
-                self.ccn_481.append([titulos[titulo].value])
+                ccn_481 = [titulos[titulo].value]
+                self.ccn_481.append(ccn_481[0])
         else:
             pass
 
@@ -154,8 +156,8 @@ class ArchivoIQ(Archivo_excel):
             titulos =  self.hoja_lectura[COLUMNA]
 
             for titulo in range(FILA, len(titulos)):       
-                
-                self.ccn_559.append([titulos[titulo].value])
+                ccn_559 = [titulos[titulo].value]
+                self.ccn_559.append(ccn_559[0])
         else:
             pass
 
@@ -167,9 +169,9 @@ class ArchivoIQ(Archivo_excel):
 
 class ReporteSap(Archivo_excel):
 
-    def __init__(self):
+    def __init__(self, ruta):
         
-        self.ruta = rutas_lectura['REPORTE_SAP']
+        self.ruta = ruta
         Archivo_excel.__init__(self, self.ruta)
 
         self.hoja = 0
