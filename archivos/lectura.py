@@ -241,17 +241,24 @@ class ArchivoRetimbre(Archivo_excel):
         self.ruta_archivo = ruta
         Archivo_excel.__init__(self, self.ruta_archivo)
 
+        self.hoja = 0
+        self.hoja_lectura = self.hojas_lista[self.hoja]
+
+        self.leer_titulos(self.hoja, 1)
     
     
-    def leer(self):
-        pass
+    def obtener_uuid(self):
+        self.uuid = list()
+        
+        COLUMNA = self.claves_columnas['UUID']    #Columna que lee
+        FILA    = self.columnas_i['UUID']         #Fila que omite la lectura
+                
+        titulos =  self.hoja_lectura[COLUMNA]
 
+        for titulo in range(FILA, len(titulos)):       
+            uuid = [titulos[titulo].value]
+            self.uuid.append(uuid[0])
 
+        return self.uuid
 
-
-
-
-
-
-
-
+   

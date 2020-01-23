@@ -3,7 +3,7 @@ import os
 
 from timbres_txt.nomina import Nomina, Nomina4
 from modelos.rutas_trabajo import Rutas
-from archivos.lectura import ArchivoIQ, ReporteSap
+from archivos.lectura import ArchivoIQ, ReporteSap, ArchivoRetimbre
 from modelos.archivos_excel import ArchivoExcel
 
 
@@ -24,7 +24,8 @@ class ArchivoLayout():
 				
 			elif hoja_nombre == 'txt_sap':
 				self.escribir_reporte_sap(hoja_nombre, hoja_clave)
-			else:
+			elif hoja_nombre == 'txt_n1':
+				self.escribir_rutas_archivos(askdirectory())
 				continue
 
 		guardar_archivo = asksaveasfilename (title = "Guardar Archivo Retimbrado",
@@ -93,7 +94,7 @@ class ArchivoLayout():
 				if tipo_de_nomina.split("_")[0] == "ORDINARIA":
 					
 					nom1 = Nomina(ruta_completa_nomina)
-
+					# obtener rutas de xml y txt
 					nom1_timbres = nom1.recuperar_timbres()
 					nom1_cfdi    = nom1.recuperar_txt()
 					nom4 = Nomina4(ruta_completa_nomina)
@@ -102,10 +103,20 @@ class ArchivoLayout():
 
 					self.archivos_nom["nom1_timbres"] = nom1_timbres
 					self.archivos_nom["nom1_cfdi"]    = nom1_cfdi
+
 					self.archivos_nom["nom4_timbres"] = nom4_timbres
 					self.archivos_nom["nom4_cfdi"]    = nom4_cfdi 
 
-					
+					#obtener uuid de los timbres
+					retimbre_base1 = ArchivoRetimbre(self.rutas_trabajo['REPORTE_B1_TIM'])
+					uuid_base1     = retimbre_base1.obtener_uuid()
+
+					retimbre_base4 = ArchivoRetimbre(self.rutas_trabajo['REPORTE_B4_TIM'])
+					uuid_base4     = retimbre_base4.obtener_uuid()
+
+					self.archivos_nom["nom1_uuid"] = uuid_base1
+					self.archivos_nom["nom4_uuid"] = uuid_base4
+
 					#Escribe todas las rutas de los xml y cfdi
 					self.excel.escribir_en_hoja(nom1_cfdi, 1, 4)
 					self.excel.escribir_en_hoja(nom1_timbres, 1, 5)
@@ -133,5 +144,5 @@ class ArchivoLayout():
 
 
 layout = ArchivoLayout()
-#layout.escribir_layout()
-layout.escribir_rutas_archivos(askdirectory())
+layout.escribir_layout()
+
