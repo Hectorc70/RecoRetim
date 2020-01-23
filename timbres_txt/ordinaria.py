@@ -18,20 +18,22 @@ class NominaOrdinariaBase(Nomina, Nomina4):
         self.ruta_nominas = ruta
 
         
-    def nomina1(self):
+    def recuperar(self):
 
-        Nomina.__init__(self, self.ruta_nominas)
-        return self.recuperar_timbres()
-        self.recuperar_txt()
 
-        
+        nom1_timbres = list()
+        nom1_cfdi    = list()
+        nom4_timbres = list()
+        nom4_cfdi    = list()
 
-    def nomina4(self):
 
-        Nomina4.__init__(self, self.ruta_nominas)
-        self.recuperar_timbres_nom4()
-        self.recuperar_txt_nom4()
-        
-        
+
+        for ruta, carpetas, documentos in os.walk(self.ruta_nominas, topdown = True):
+
+            for tipo_de_nomina in carpetas:
+                    ruta_completa_nomina = ruta.replace("/", "\\") + "\\" + tipo_de_nomina
+
+                    if tipo_de_nomina.split("_")[0] == "ORDINARIA":
+                        
     
         

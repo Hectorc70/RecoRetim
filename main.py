@@ -24,15 +24,6 @@ class ArchivoLayout():
 				
 			elif hoja_nombre == 'txt_sap':
 				self.escribir_reporte_sap(hoja_nombre, hoja_clave)
-
-			elif hoja_nombre == 'txt_n1':
-			
-			elif hoja_nombre == 'xml_n1':
-
-			elif hoja_nombre == 'txt_n4':
-			
-			elif hoja_nombre == 'xml_n4':
-
 			else:
 				continue
 
@@ -88,8 +79,9 @@ class ArchivoLayout():
 
 
 	def escribir_rutas_archivos(self, ruta_nominas):
+		
 		self.carpetas_nom = dict()
-
+		self.archivos_nom = dict()
 
 
 		for ruta, carpetas, documentos in os.walk(ruta_nominas, topdown = True):
@@ -101,11 +93,17 @@ class ArchivoLayout():
 				if tipo_de_nomina.split("_")[0] == "ORDINARIA":
 					
 					nom1 = Nomina(ruta_completa_nomina)
+
 					nom1_timbres = nom1.recuperar_timbres()
 					nom1_cfdi    = nom1.recuperar_txt()
 					nom4 = Nomina4(ruta_completa_nomina)
 					nom4_timbres = nom4.recuperar_timbres_nom4()
 					nom4_cfdi    = nom4.recuperar_txt_nom4()
+
+					self.archivos_nom["nom1_timbres"] = nom1_timbres
+					self.archivos_nom["nom1_cfdi"]    = nom1_cfdi
+					self.archivos_nom["nom4_timbres"] = nom4_timbres
+					self.archivos_nom["nom4_cfdi"]    = nom4_cfdi 
 
 					
 					#Escribe todas las rutas de los xml y cfdi
@@ -135,4 +133,5 @@ class ArchivoLayout():
 
 
 layout = ArchivoLayout()
-layout.escribir_layout()
+#layout.escribir_layout()
+layout.escribir_rutas_archivos(askdirectory())
