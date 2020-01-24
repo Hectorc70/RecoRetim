@@ -1,20 +1,20 @@
 from tkinter.filedialog import askdirectory
 
 from archivos.modelos.archivo_excel import Archivo_excel
-from archivos.ayuda.rutas_trabajo import Rutas
+#rom archivos.ayuda.rutas_trabajo import Rutas
 
 
 
 
-archivo = Rutas(askdirectory()) 
-rutas_lectura = archivo.recuperar_rutas()
+#archivo = Rutas(askdirectory()) 
+#rutas_lectura = archivo.recuperar_rutas()
 
 class ArchivoIQ(Archivo_excel):
-    "ARCHIVO IQ"
+    "Extrae informacion del ARCHIVO IQ"
 
-    def __init__(self):
+    def __init__(self, ruta_iq):
 
-        self.ruta = rutas_lectura['IQ']
+        self.ruta = ruta_iq
         Archivo_excel.__init__(self, self.ruta)
         self.hoja = 0
         self.hoja_lectura = self.hojas_lista[self.hoja]        #Hoja de lectura                     
@@ -32,12 +32,15 @@ class ArchivoIQ(Archivo_excel):
                 
         titulos =  self.hoja_lectura[COLUMNA]
 
-        for titulo in range(FILA, len(titulos)):       
-             
-            self.control.append([titulos[titulo].value])
+        for titulo in range(FILA, len(titulos)):            
+            
+            control = [titulos[titulo].value]
+            self.control.append(control[0])
+        
 
+        return self.control
       
-        self.cerrar_doc()
+        
     def extraer_ccn_1401(self):
 
         self.ccn_1401 = list() 
@@ -51,10 +54,13 @@ class ArchivoIQ(Archivo_excel):
             titulos =  self.hoja_lectura[COLUMNA]
 
             for titulo in range(FILA, len(titulos)):       
-                
-                self.ccn_1401.append([titulos[titulo].value])
+                ccn_1401 = [titulos[titulo].value]    
+                self.ccn_1401.append(ccn_1401[0])
         else:
             pass
+
+        return self.ccn_1401
+
     def extraer_ccn_1409(self):
 
         self.ccn_1409 = list() 
@@ -68,10 +74,12 @@ class ArchivoIQ(Archivo_excel):
             titulos =  self.hoja_lectura[COLUMNA]
 
             for titulo in range(FILA, len(titulos)):       
-                
-                self.ccn_1409.append([titulos[titulo].value])
+                ccn_1409 = [titulos[titulo].value]
+                self.ccn_1409.append(ccn_1409[0])
         else:
             pass
+
+        return self.ccn_1409
 
     def extraer_ccn_2240(self):
 
@@ -86,10 +94,13 @@ class ArchivoIQ(Archivo_excel):
             titulos =  self.hoja_lectura[COLUMNA]
 
             for titulo in range(FILA, len(titulos)):       
-                
-                self.ccn_2240.append([titulos[titulo].value])
+                ccn_2240 = [titulos[titulo].value]
+                self.ccn_2240.append(ccn_2240[0])
         else:
             pass
+
+
+        return self.ccn_2240
 
     def extraer_ccn_2566(self):
         self.ccn_2566 = list() 
@@ -103,10 +114,12 @@ class ArchivoIQ(Archivo_excel):
             titulos =  self.hoja_lectura[COLUMNA]
 
             for titulo in range(FILA, len(titulos)):       
-                
-                self.ccn_2566.append([titulos[titulo].value])
+                ccn_2566 = [titulos[titulo].value]
+                self.ccn_2566.append(ccn_2566[0])
         else:
             pass
+
+        return self.ccn_2566
 
         
     def extraer_ccn_481(self):
@@ -122,10 +135,12 @@ class ArchivoIQ(Archivo_excel):
             titulos =  self.hoja_lectura[COLUMNA]
 
             for titulo in range(FILA, len(titulos)):       
-                
-                self.ccn_481.append([titulos[titulo].value])
+                ccn_481 = [titulos[titulo].value]
+                self.ccn_481.append(ccn_481[0])
         else:
             pass
+
+        return self.ccn_481
 
 
     def extraer_ccn_559(self):
@@ -141,10 +156,12 @@ class ArchivoIQ(Archivo_excel):
             titulos =  self.hoja_lectura[COLUMNA]
 
             for titulo in range(FILA, len(titulos)):       
-                
-                self.ccn_559.append([titulos[titulo].value])
+                ccn_559 = [titulos[titulo].value]
+                self.ccn_559.append(ccn_559[0])
         else:
             pass
+
+        return self.ccn_559
     
 
 
@@ -152,9 +169,9 @@ class ArchivoIQ(Archivo_excel):
 
 class ReporteSap(Archivo_excel):
 
-    def __init__(self):
+    def __init__(self, ruta):
         
-        self.ruta = rutas_lectura['REPORTE_SAP']
+        self.ruta = ruta
         Archivo_excel.__init__(self, self.ruta)
 
         self.hoja = 0
@@ -172,8 +189,8 @@ class ReporteSap(Archivo_excel):
         titulos =  self.hoja_lectura[COLUMNA]
 
         for titulo in range(FILA, len(titulos)):       
-             
-            self.control.append([titulos[titulo].value])
+            control = [titulos[titulo].value]
+            self.control.append(control[0])
 
         return self.control
 
@@ -188,10 +205,10 @@ class ReporteSap(Archivo_excel):
         titulos =  self.hoja_lectura[COLUMNA]
 
         for titulo in range(FILA, len(titulos)):       
-             
-              self.nom1.append([titulos[titulo].value])
+            nom1 = [titulos[titulo].value]
+            self.nom1.append(nom1[0])
 
-        return self.nom4
+        return self.nom1
     
     def obtener_nom4(self):
 
@@ -203,8 +220,8 @@ class ReporteSap(Archivo_excel):
         titulos =  self.hoja_lectura[COLUMNA]
 
         for titulo in range(FILA, len(titulos)):       
-             
-              self.nom4.append([titulos[titulo].value])
+            nom4 = [titulos[titulo].value]
+            self.nom4.append(nom4[0])
 
         return self.nom4
 
@@ -224,17 +241,24 @@ class ArchivoRetimbre(Archivo_excel):
         self.ruta_archivo = ruta
         Archivo_excel.__init__(self, self.ruta_archivo)
 
+        self.hoja = 0
+        self.hoja_lectura = self.hojas_lista[self.hoja]
+
+        self.leer_titulos(self.hoja, 1)
     
     
-    def leer(self):
-        pass
+    def obtener_uuid(self):
+        self.uuid = list()
+        
+        COLUMNA = self.claves_columnas['UUID']    #Columna que lee
+        FILA    = self.columnas_i['UUID']         #Fila que omite la lectura
+                
+        titulos =  self.hoja_lectura[COLUMNA]
 
+        for titulo in range(FILA, len(titulos)):       
+            uuid = [titulos[titulo].value]
+            self.uuid.append(uuid[0])
 
+        return self.uuid
 
-
-
-
-
-
-
-
+   

@@ -25,8 +25,8 @@ class Nomina:
 
             for archivo in archivos:
 
-                carpeta_de_nomina = ruta.split("\\")[3]
-                tipo_de_nomina    = ruta.split("\\")[4] 
+                carpeta_de_nomina = ruta.split("\\")[4]
+                tipo_de_nomina    = ruta.split("\\")[5] 
                 extencion = os.path.splitext(archivo)
 
                 if (carpeta_de_nomina.split("_")[0] == 'ORDINARIA' and
@@ -54,17 +54,16 @@ class Nomina:
 
             for archivo in archivos:
 
-                carpeta_de_nomina = ruta.split("\\")[3]
-                tipo_de_nomina    = ruta.split("\\")[4] 
+                carpeta_de_nomina = ruta.split("\\")[4]
+                tipo_de_nomina    = ruta.split("\\")[5] 
                 extencion = os.path.splitext(archivo)
 
                 if (carpeta_de_nomina.split("_")[0] == 'ORDINARIA' and
                     tipo_de_nomina.split("_")[0] == 'BASE'):
 
-                    if extencion[-1] == '.txt':
+                    control = archivo.split("_")[0]
+                    if extencion[-1] == '.txt' and len(control) == 8:                     
                         ruta_completa = ruta + "\\" + archivo
-                        control = archivo.split("_")[0]   
-
                         self.control_cfdi_ord.append(control)
                         self.rutas_cfdi_ord.append(ruta_completa)
 
@@ -90,8 +89,8 @@ class Nomina4():
 
             for archivo in archivos:
 
-                carpeta_de_nomina = ruta.split("\\")[3]
-                tipo_de_nomina    = ruta.split("\\")[4]
+                carpeta_de_nomina = ruta.split("\\")[4]
+                tipo_de_nomina    = ruta.split("\\")[5]
                 extencion = os.path.splitext(archivo)
 
                 if (carpeta_de_nomina.split("_")[0] == 'ORDINARIA' and
@@ -119,17 +118,16 @@ class Nomina4():
 
             for archivo in archivos:
 
-                carpeta_de_nomina = ruta.split("\\")[3]
-                tipo_de_nomina    = ruta.split("\\")[4] 
+                carpeta_de_nomina = ruta.split("\\")[4]
+                tipo_de_nomina    = ruta.split("\\")[5] 
                 extencion = os.path.splitext(archivo)
 
                 if (carpeta_de_nomina.split("_")[0] == 'ORDINARIA' and
                     tipo_de_nomina.split("_")[0] == 'BASE4'):
 
-                    if extencion[-1] == '.txt':
+                    control = archivo.split("_")[0]
+                    if extencion[-1] == '.txt' and len(control) == 8:
                         ruta_completa = ruta + "\\" + archivo
-                        control = archivo.split("_")[0]
-
                         self.control_cfdi4.append(control)
                         self.rutas_cfdi4.append(ruta_completa)
 
@@ -155,8 +153,8 @@ class NominaConfianza():
 
             for archivo in archivos:
 
-                carpeta_de_nomina = ruta.split("\\")[3]
-                tipo_de_nomina    = ruta.split("\\")[4]
+                carpeta_de_nomina = ruta.split("\\")[4]
+                tipo_de_nomina    = ruta.split("\\")[5]
                 extencion = os.path.splitext(archivo)
 
                 if (carpeta_de_nomina.split("_")[0] == 'ORDINARIA' and
@@ -183,17 +181,16 @@ class NominaConfianza():
 
             for archivo in archivos:
 
-                carpeta_de_nomina = ruta.split("\\")[3]
-                tipo_de_nomina    = ruta.split("\\")[4] 
+                carpeta_de_nomina = ruta.split("\\")[4]
+                tipo_de_nomina    = ruta.split("\\")[5] 
                 extencion = os.path.splitext(archivo)
 
                 if (carpeta_de_nomina.split("_")[0] == 'ORDINARIA' and
                     tipo_de_nomina.split("_")[0] == 'CONFIANZA'):
 
-                    if extencion[-1] == '.txt':
+                    control = archivo.split("_")[0]
+                    if extencion[-1] == '.txt' and len(control) == 8:
                         ruta_completa = ruta + "\\" + archivo
-                        control = archivo.split("_")[0]
-
                         self.control_cfdi5.append(control)
                         self.rutas_cfdi5.append(ruta_completa)
 
