@@ -23,16 +23,15 @@ class Nomina:
 
         for ruta, carpetas, archivos in os.walk(self.ruta, topdown = True):  
 
-            for archivo in archivos:
+            for archivo in archivos:  
 
-                carpeta_de_nomina = ruta.split("\\")[4]
-                tipo_de_nomina    = ruta.split("\\")[5] 
                 extencion = os.path.splitext(archivo)
+                if extencion[-1] == '.xml':
+                    carpeta_de_nomina = ruta.split("\\")[4]
+                    tipo_de_nomina    = ruta.split("\\")[5]                   
 
-                if (carpeta_de_nomina.split("_")[0] == 'ORDINARIA' and
-                    tipo_de_nomina.split("_")[0] == 'BASE'):
-
-                    if extencion[-1] == '.xml':
+                    if (carpeta_de_nomina.split("_")[0] == 'ORDINARIA' and
+                        tipo_de_nomina.split("_")[0] == 'BASE'):                    
                         ruta_completa = ruta + "\\" + archivo
                         control = archivo.split("_")[0]
 
@@ -54,15 +53,16 @@ class Nomina:
 
             for archivo in archivos:
 
-                carpeta_de_nomina = ruta.split("\\")[4]
-                tipo_de_nomina    = ruta.split("\\")[5] 
                 extencion = os.path.splitext(archivo)
+                control = archivo.split("_")[0]
+                if extencion[-1] == '.txt' and len(control) == 8:
 
-                if (carpeta_de_nomina.split("_")[0] == 'ORDINARIA' and
-                    tipo_de_nomina.split("_")[0] == 'BASE'):
+                    carpeta_de_nomina = ruta.split("\\")[4]
+                    tipo_de_nomina    = ruta.split("\\")[5] 
 
-                    control = archivo.split("_")[0]
-                    if extencion[-1] == '.txt' and len(control) == 8:                     
+                    if (carpeta_de_nomina.split("_")[0] == 'ORDINARIA' and
+                        tipo_de_nomina.split("_")[0] == 'BASE'):
+                        
                         ruta_completa = ruta + "\\" + archivo
                         self.control_cfdi_ord.append(control)
                         self.rutas_cfdi_ord.append(ruta_completa)
@@ -87,16 +87,15 @@ class Nomina4():
         
         for ruta, carpetas, archivos in os.walk(self.ruta, topdown = True):  
 
-            for archivo in archivos:
-
-                carpeta_de_nomina = ruta.split("\\")[4]
-                tipo_de_nomina    = ruta.split("\\")[5]
+            for archivo in archivos:               
                 extencion = os.path.splitext(archivo)
 
-                if (carpeta_de_nomina.split("_")[0] == 'ORDINARIA' and
-                    tipo_de_nomina.split("_")[0] == 'BASE4'):
+                if extencion[-1] == '.xml':
+                    carpeta_de_nomina = ruta.split("\\")[4]
+                    tipo_de_nomina    = ruta.split("\\")[5]
 
-                    if extencion[-1] == '.xml':
+                    if (carpeta_de_nomina.split("_")[0] == 'ORDINARIA' and
+                        tipo_de_nomina.split("_")[0] == 'BASE4'):                   
                         ruta_completa = ruta + "\\" + archivo
                         control = archivo.split("_")[0]
 
@@ -118,15 +117,16 @@ class Nomina4():
 
             for archivo in archivos:
 
-                carpeta_de_nomina = ruta.split("\\")[4]
-                tipo_de_nomina    = ruta.split("\\")[5] 
                 extencion = os.path.splitext(archivo)
+                control = archivo.split("_")[0]
 
-                if (carpeta_de_nomina.split("_")[0] == 'ORDINARIA' and
-                    tipo_de_nomina.split("_")[0] == 'BASE4'):
+                if extencion[-1] == '.txt' and len(control) == 8:
+                    carpeta_de_nomina = ruta.split("\\")[4]
+                    tipo_de_nomina    = ruta.split("\\")[5] 
 
-                    control = archivo.split("_")[0]
-                    if extencion[-1] == '.txt' and len(control) == 8:
+                    if (carpeta_de_nomina.split("_")[0] == 'ORDINARIA' and
+                        tipo_de_nomina.split("_")[0] == 'BASE4'):                    
+                    
                         ruta_completa = ruta + "\\" + archivo
                         self.control_cfdi4.append(control)
                         self.rutas_cfdi4.append(ruta_completa)
@@ -152,15 +152,14 @@ class NominaConfianza():
         for ruta, carpetas, archivos in os.walk(self.ruta, topdown = True):  
 
             for archivo in archivos:
-
-                carpeta_de_nomina = ruta.split("\\")[4]
-                tipo_de_nomina    = ruta.split("\\")[5]
+               
                 extencion = os.path.splitext(archivo)
+                if extencion[-1] == '.xml':
+                    carpeta_de_nomina = ruta.split("\\")[4]
+                    tipo_de_nomina    = ruta.split("\\")[5]
 
                 if (carpeta_de_nomina.split("_")[0] == 'ORDINARIA' and
-                    tipo_de_nomina.split("_")[0] == 'CONFIANZA'):
-
-                    if extencion[-1] == '.xml':
+                    tipo_de_nomina.split("_")[0] == 'CONFIANZA'):                    
                         ruta_completa = ruta + "\\" + archivo
                         control = archivo.split("_")[0]
 
@@ -181,15 +180,14 @@ class NominaConfianza():
 
             for archivo in archivos:
 
-                carpeta_de_nomina = ruta.split("\\")[4]
-                tipo_de_nomina    = ruta.split("\\")[5] 
                 extencion = os.path.splitext(archivo)
+                control = archivo.split("_")[0]
+                if extencion[-1] == '.txt' and len(control) == 8:
+                    carpeta_de_nomina = ruta.split("\\")[4]
+                    tipo_de_nomina    = ruta.split("\\")[5] 
 
-                if (carpeta_de_nomina.split("_")[0] == 'ORDINARIA' and
-                    tipo_de_nomina.split("_")[0] == 'CONFIANZA'):
-
-                    control = archivo.split("_")[0]
-                    if extencion[-1] == '.txt' and len(control) == 8:
+                    if (carpeta_de_nomina.split("_")[0] == 'ORDINARIA' and
+                        tipo_de_nomina.split("_")[0] == 'CONFIANZA'):                   
                         ruta_completa = ruta + "\\" + archivo
                         self.control_cfdi5.append(control)
                         self.rutas_cfdi5.append(ruta_completa)
