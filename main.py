@@ -1,7 +1,7 @@
 from tkinter.filedialog import askdirectory, asksaveasfilename
 import os
 
-from timbres_txt.nomina import Nomina, Nomina4
+from timbres_txt.ordinaria import NominaOrdinariaBase
 from modelos.rutas_trabajo import Rutas
 from archivos.lectura import ArchivoIQ, ReporteSap, ArchivoRetimbre
 from modelos.archivos_excel import ArchivoExcel
@@ -18,15 +18,47 @@ class ArchivoLayout():
 		
    
 	def escribir_layout(self):
+
+		nom_ord 	 = NominaOrdinariaBase (askdirectory())
+		timbres_cfdi = nom_ord.recuperar_nom()
+		
 		for hoja_nombre, hoja_clave in  self.excel.hojas[0].items():
 			if hoja_nombre == 'hoja trabajo':
 				self.escribir_conceptos(hoja_nombre, hoja_clave)
 				
 			elif hoja_nombre == 'txt_sap':
 				self.escribir_reporte_sap(hoja_nombre, hoja_clave)
+
 			elif hoja_nombre == 'txt_n1':
-				self.escribir_rutas_archivos(askdirectory())
-				continue
+				nom1_txt = timbres_cfdi["nom1_cfdi"]
+				self.excel.escribir_en_hoja(nom1_txt, 0, hoja_clave)
+
+			elif hoja_nombre == 'xml_n1':				
+				retimbre_base1 = ArchivoRetimbre(self.rutas_trabajo['REPORTE_B1_TIM'])
+				uuid_base1     = [retimbre_base1.obtener_uuid()]
+
+				nom1_xml = timbres_cfdi["nom1_timbres"]
+				
+				self.excel.escribir_en_hoja(nom1_xml, 0, hoja_clave)
+				self.excel.escribir_en_hoja(uuid_base1, 3, hoja_clave)
+			
+			elif hoja_nombre == 'txt_n4':
+				nom4_txt = timbres_cfdi["nom4_cfdi"]
+				self.excel.escribir_en_hoja(nom4_txt, 0, hoja_clave)
+
+			elif hoja_nombre == 'xml_n4':
+				retimbre_base4 = ArchivoRetimbre(self.rutas_trabajo['REPORTE_B4_TIM'])
+				uuid_base4     = [retimbre_base4.obtener_uuid()]
+
+				nom4_xml = timbres_cfdi["nom4_cfdi"]
+
+				self.excel.escribir_en_hoja(nom4_xml, 0, hoja_clave)
+				self.excel.escribir_en_hoja(uuid_base4, 3, hoja_clave)
+
+
+			
+
+				
 
 		guardar_archivo = asksaveasfilename (title = "Guardar Archivo Retimbrado",
 											 filetypes = (("Libro Excel", "* .xlsx" ))) 
@@ -82,7 +114,10 @@ class ArchivoLayout():
 	def escribir_rutas_archivos(self, ruta_nominas):
 		
 		self.carpetas_nom = dict()
-		self.archivos_nom = dict()
+		
+
+
+		
 
 
 		for ruta, carpetas, documentos in os.walk(ruta_nominas, topdown = True):
@@ -93,36 +128,19 @@ class ArchivoLayout():
 
 				if tipo_de_nomina.split("_")[0] == "ORDINARIA":
 					
-					nom1 = Nomina(ruta_completa_nomina)
-					# obtener rutas de xml y txt
-					nom1_timbres = nom1.recuperar_timbres()
-					nom1_cfdi    = nom1.recuperar_txt()
-					nom4 = Nomina4(ruta_completa_nomina)
-					nom4_timbres = nom4.recuperar_timbres_nom4()
-					nom4_cfdi    = nom4.recuperar_txt_nom4()
+					
 
-					self.archivos_nom["nom1_timbres"] = nom1_timbres
-					self.archivos_nom["nom1_cfdi"]    = nom1_cfdi
-
-					self.archivos_nom["nom4_timbres"] = nom4_timbres
-					self.archivos_nom["nom4_cfdi"]    = nom4_cfdi 
+					
 
 					#obtener uuid de los timbres
-					retimbre_base1 = ArchivoRetimbre(self.rutas_trabajo['REPORTE_B1_TIM'])
-					uuid_base1     = retimbre_base1.obtener_uuid()
+					
 
-					retimbre_base4 = ArchivoRetimbre(self.rutas_trabajo['REPORTE_B4_TIM'])
-					uuid_base4     = retimbre_base4.obtener_uuid()
-
+					
 					self.archivos_nom["nom1_uuid"] = uuid_base1
 					self.archivos_nom["nom4_uuid"] = uuid_base4
 
 					#Escribe todas las rutas de los xml y cfdi
-					self.excel.escribir_en_hoja(nom1_cfdi, 1, 4)
-					self.excel.escribir_en_hoja(nom1_timbres, 1, 5)
-					self.excel.escribir_en_hoja(nom4_cfdi, 1, 6)
-					self.excel.escribir_en_hoja(nom4_timbres, 1, 7)
-					
+				
 					
 
 
@@ -133,6 +151,15 @@ class ArchivoLayout():
 				self.carpetas_nom[nomina_mayusc] = ruta_completa_nomina
 
 		return self.carpetas_nom
+
+
+
+
+
+
+		
+			
+
 
 
 

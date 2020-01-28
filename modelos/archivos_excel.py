@@ -182,7 +182,7 @@ class ArchivoExcel:
 				
 				#print("leyendo Otra Lista")
 			else:
-				print("Escritas todas las columnas")
+				print("escritas todas las columnas")
 
 	def guardar(self, ruta):
 
