@@ -35,11 +35,7 @@ class ArchivoIQ(Archivo_excel):
         for titulo in range(FILA, len(titulos)):            
             
             control = [titulos[titulo].value]
-
-            if control[0] is None:                         
-                continue
-            else:
-                self.control.append(control[0])
+            self.control.append(control[0])
         
 
         return self.control
