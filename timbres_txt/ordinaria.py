@@ -1,11 +1,8 @@
 
 import os
-import os.path
-from tkinter.filedialog import asksaveasfilename
-from os.path import splitext
 
-from timbres_txt.modelos.nomina import Nomina
-from timbres_txt.modelos.nomina import Nomina4
+from timbres_txt.nomina import Nomina
+from timbres_txt.nomina import Nomina4
 
 
 
@@ -13,27 +10,37 @@ from timbres_txt.modelos.nomina import Nomina4
 
 class NominaOrdinariaBase(Nomina, Nomina4):
 
-    def __init__(self, ruta):
+	def __init__(self, ruta):
 
-        self.ruta_nominas = ruta
+		self.ruta_nominas = ruta
 
-        
-    def recuperar(self):
+		
+	def recuperar_nom(self):
 
+		self.archivos_nom = dict()
 
-        nom1_timbres = list()
-        nom1_cfdi    = list()
-        nom4_timbres = list()
-        nom4_cfdi    = list()
+		for ruta, carpetas, documentos in os.walk(self.ruta_nominas, topdown = True):
 
+			for tipo_de_nomina in carpetas:
+					ruta_completa_nomina = ruta.replace("/", "\\") + "\\" + tipo_de_nomina
 
+					if tipo_de_nomina.split("_")[0] == "ORDINARIA":
 
-        for ruta, carpetas, documentos in os.walk(self.ruta_nominas, topdown = True):
+						nom1 = Nomina(ruta_completa_nomina)
 
-            for tipo_de_nomina in carpetas:
-                    ruta_completa_nomina = ruta.replace("/", "\\") + "\\" + tipo_de_nomina
+						# obtener rutas de xml y txt
+						nom1_timbres = nom1.recuperar_timbres()
+						nom1_cfdi    = nom1.recuperar_txt()
 
-                    if tipo_de_nomina.split("_")[0] == "ORDINARIA":
-                        
-    
-        
+						nom4 = Nomina4(ruta_completa_nomina)
+						nom4_timbres = nom4.recuperar_timbres_nom4()
+						nom4_cfdi    = nom4.recuperar_txt_nom4()       
+
+						self.archivos_nom["nom1_timbres"] = nom1_timbres
+						self.archivos_nom["nom1_cfdi"]    = nom1_cfdi
+
+						self.archivos_nom["nom4_timbres"] = nom4_timbres
+						self.archivos_nom["nom4_cfdi"]    = nom4_cfdi 
+
+		return self.archivos_nom
+			
