@@ -52,10 +52,15 @@ class ArchivoIQ(Archivo_excel):
             FILA    = self.columnas_i_ccn[titulo]         #Fila que omite la lectura
             
             titulos =  self.hoja_lectura[COLUMNA]
-
-            for titulo in range(FILA, len(titulos)):       
-                ccn_1401 = [titulos[titulo].value]    
-                self.ccn_1401.append(ccn_1401[0])
+           
+            for titulo in range(FILA, len(titulos)):   
+                ccn_1401 = [titulos[titulo].value] 
+                  
+                if ccn_1401[0] == None:
+                    self.ccn_1401.append("")
+                    continue
+                else:                       
+                    self.ccn_1401.append(ccn_1401[0])
         else:
             pass
 
@@ -75,7 +80,11 @@ class ArchivoIQ(Archivo_excel):
 
             for titulo in range(FILA, len(titulos)):       
                 ccn_1409 = [titulos[titulo].value]
-                self.ccn_1409.append(ccn_1409[0])
+                if ccn_1409[0] == None:
+                    self.ccn_1409.append("")
+                    continue
+                else:
+                    self.ccn_1409.append(ccn_1409[0])
         else:
             pass
 
@@ -95,7 +104,11 @@ class ArchivoIQ(Archivo_excel):
 
             for titulo in range(FILA, len(titulos)):       
                 ccn_2240 = [titulos[titulo].value]
-                self.ccn_2240.append(ccn_2240[0])
+                if ccn_2240[0] == None:
+                    self.ccn_2240.append("")
+                    continue
+                else:
+                    self.ccn_2240.append(ccn_2240[0])
         else:
             pass
 
@@ -115,7 +128,11 @@ class ArchivoIQ(Archivo_excel):
 
             for titulo in range(FILA, len(titulos)):       
                 ccn_2566 = [titulos[titulo].value]
-                self.ccn_2566.append(ccn_2566[0])
+                if ccn_2566[0] == None:
+                    self.ccn_2566.append("")
+                    continue
+                else:
+                    self.ccn_2566.append(ccn_2566[0])
         else:
             pass
 
@@ -136,7 +153,11 @@ class ArchivoIQ(Archivo_excel):
 
             for titulo in range(FILA, len(titulos)):       
                 ccn_481 = [titulos[titulo].value]
-                self.ccn_481.append(ccn_481[0])
+                if ccn_481[0] == None:
+                    self.ccn_481.append("")
+                    continue
+                else:
+                    self.ccn_481.append(ccn_481[0])
         else:
             pass
 
@@ -157,7 +178,11 @@ class ArchivoIQ(Archivo_excel):
 
             for titulo in range(FILA, len(titulos)):       
                 ccn_559 = [titulos[titulo].value]
-                self.ccn_559.append(ccn_559[0])
+                if ccn_559[0] == None:
+                    self.ccn_559.append("")
+                    continue
+                else:
+                    self.ccn_559.append(ccn_559[0])
         else:
             pass
 
