@@ -62,7 +62,7 @@ class ArchivoIQ(Archivo_excel):
                 else:                       
                     self.ccn_1401.append(ccn_1401[0])
         else:
-            pass
+            pass 
 
         return self.ccn_1401
 
@@ -231,6 +231,7 @@ class ReporteSap(Archivo_excel):
 
         for titulo in range(FILA, len(titulos)):       
             nom1 = [titulos[titulo].value]
+            
             self.nom1.append(nom1[0])
 
         return self.nom1
