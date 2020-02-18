@@ -178,7 +178,7 @@ class ArchivoExcel:
 					#print(texto,"|fila|",fila, "|columna|",col)
 
 					texto_celda = self.wb.active.cell(row = fila, column = col)
-					texto_celda.value = (str(texto))        
+					texto_celda.value = (texto)
 				
 				#print("leyendo Otra Lista")
 			else:
