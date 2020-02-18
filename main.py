@@ -81,10 +81,10 @@ class ArchivoLayout():
 
 			if titulo == 'Control':
 				self.excel.escribir_en_hoja(iq_control, numero_columna,
-											 clave_hoja)
+											 clave_hoja, 0)
 			elif titulo == 'UUID_NOM1':                 
 				self.excel.escribir_en_hoja(Conceptos, numero_columna,
-											 clave_hoja)
+											 clave_hoja, 0)
 		
 			
 					
