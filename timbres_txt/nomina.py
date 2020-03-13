@@ -64,7 +64,7 @@ class Nomina:
                         tipo_de_nomina.split("_")[0] == 'BASE'):
                         
                         ruta_completa = ruta + "\\" + archivo
-                        self.control_cfdi_ord.append(control)
+                        self.control_cfdi_ord.append(int(control))
                         self.rutas_cfdi_ord.append(ruta_completa)
 
         return [self.control_cfdi_ord, self.rutas_cfdi_ord]
@@ -99,7 +99,7 @@ class Nomina4():
                         ruta_completa = ruta + "\\" + archivo
                         control = archivo.split("_")[0]
 
-                        self.control_timbres4.append(control)
+                        self.control_timbres4.append(int(control))
                         self.rutas_timbres4.append(ruta_completa)
         
         return [self.control_timbres4, self.rutas_timbres4]
@@ -128,7 +128,7 @@ class Nomina4():
                         tipo_de_nomina.split("_")[0] == 'BASE4'):                    
                     
                         ruta_completa = ruta + "\\" + archivo
-                        self.control_cfdi4.append(control)
+                        self.control_cfdi4.append(int(control))
                         self.rutas_cfdi4.append(ruta_completa)
 
         return [self.control_cfdi4, self.rutas_cfdi4]
@@ -163,7 +163,7 @@ class NominaConfianza():
                         ruta_completa = ruta + "\\" + archivo
                         control = archivo.split("_")[0]
 
-                        self.control_timbres5.append(control)
+                        self.control_timbres5.append(int(control))
                         self.rutas_timbres5.append(ruta_completa)
 
         return [self.control_timbres5, self.rutas_timbres5]
@@ -189,7 +189,7 @@ class NominaConfianza():
                     if (carpeta_de_nomina.split("_")[0] == 'ORDINARIA' and
                         tipo_de_nomina.split("_")[0] == 'CONFIANZA'):                   
                         ruta_completa = ruta + "\\" + archivo
-                        self.control_cfdi5.append(control)
+                        self.control_cfdi5.append(int(control))
                         self.rutas_cfdi5.append(ruta_completa)
 
         return [self.control_cfdi5, self.rutas_cfdi5]

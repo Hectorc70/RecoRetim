@@ -160,7 +160,7 @@ class ArchivoExcel:
 
 	
 	def escribir_varias_columnas(self, hoja_activa, listas, col, fila):
-		"""SE DEBE PONER EL NUEMERO DE LA COLUMNA QUE ESTA OCUPADA EJEMPLO
+		"""SE DEBE PONER EL NUMERO DE LA COLUMNA QUE ESTA OCUPADA EJEMPLO
 			O PARA QUE EMPIECE EN LA 1"""
 
 			
@@ -178,7 +178,7 @@ class ArchivoExcel:
 					#print(texto,"|fila|",fila, "|columna|",col)
 
 					texto_celda = self.wb.active.cell(row = fila, column = col)
-					texto_celda.value = (str(texto))        
+					texto_celda.value = (texto)
 				
 				#print("leyendo Otra Lista")
 			else:

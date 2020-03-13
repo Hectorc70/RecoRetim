@@ -50,7 +50,7 @@ class ArchivoLayout():
 				retimbre_base4 = ArchivoRetimbre(self.rutas_trabajo['REPORTE_B4_TIM'])
 				uuid_base4     = [retimbre_base4.obtener_uuid()]
 
-				nom4_xml = timbres_cfdi["nom4_cfdi"]
+				nom4_xml = timbres_cfdi["nom4_timbres"]
 
 				self.excel.escribir_en_hoja(nom4_xml, 0, hoja_clave)
 				self.excel.escribir_en_hoja(uuid_base4, 3, hoja_clave)
@@ -106,67 +106,6 @@ class ArchivoLayout():
 
 		self.excel.escribir_titulo(TITULOS, 1, clave_hoja)
 		self.excel.escribir_en_hoja(datos_sap, 0, clave_hoja)
-
-		
-
-
-
-	def escribir_rutas_archivos(self, ruta_nominas):
-		
-		self.carpetas_nom = dict()
-		
-
-
-		
-
-
-		for ruta, carpetas, documentos in os.walk(ruta_nominas, topdown = True):
-
-
-			for tipo_de_nomina in carpetas:
-				ruta_completa_nomina = ruta.replace("/", "\\") + "\\" + tipo_de_nomina
-
-				if tipo_de_nomina.split("_")[0] == "ORDINARIA":
-					
-					
-
-					
-
-					#obtener uuid de los timbres
-					
-
-					
-					self.archivos_nom["nom1_uuid"] = uuid_base1
-					self.archivos_nom["nom4_uuid"] = uuid_base4
-
-					#Escribe todas las rutas de los xml y cfdi
-				
-					
-
-
-				elif tipo_de_nomina.split("_")[0] == "COMPLEMENTARIA":
-					pass
-
-				nomina_mayusc = tipo_de_nomina.upper()
-				self.carpetas_nom[nomina_mayusc] = ruta_completa_nomina
-
-		return self.carpetas_nom
-
-
-
-
-
-
-		
-			
-
-
-
-
-		
-
-	
-
 
 
 
