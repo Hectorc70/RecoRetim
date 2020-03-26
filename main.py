@@ -1,5 +1,8 @@
-from tkinter.filedialog import askdirectory, asksaveasfilename
 import os
+
+from ui import  *
+from PyQt5.QtWidgets import QDialog, QMessageBox
+from PyQt5.QtCore import QThread
 
 from timbres_txt.ordinaria import NominaOrdinariaBase
 from modelos.rutas_trabajo import Rutas
@@ -10,16 +13,16 @@ from modelos.archivos_excel import ArchivoExcel
 
 class ArchivoLayout():
 
-	def __init__(self):
-		rutas              = Rutas(askdirectory())
+	def __init__(self, ruta_archivos_trabajo):
+		rutas              = Rutas(ruta_archivos_trabajo)
 		self.rutas_trabajo = rutas.recuperar_rutas()
 
 		self.excel = ArchivoExcel(self.rutas_trabajo['TRABAJO'])
 		
    
-	def escribir_layout(self):
+	def escribir_layout(self, ruta_txt_xml, ruta_guardado):
 
-		nom_ord 	 = NominaOrdinariaBase (askdirectory())
+		nom_ord 	 = NominaOrdinariaBase(ruta_txt_xml)
 		timbres_cfdi = nom_ord.recuperar_nom()
 		
 		for hoja_nombre, hoja_clave in  self.excel.hojas[0].items():
@@ -55,14 +58,8 @@ class ArchivoLayout():
 				self.excel.escribir_en_hoja(nom4_xml, 0, hoja_clave)
 				self.excel.escribir_en_hoja(uuid_base4, 3, hoja_clave)
 
-
-			
-
 				
-
-		guardar_archivo = asksaveasfilename (title = "Guardar Archivo Retimbrado",
-											 filetypes = (("Libro Excel", "* .xlsx" ))) 
-		self.excel.guardar(guardar_archivo)
+		self.excel.guardar(ruta_guardado)
 
 	def escribir_conceptos(self, hoja, clave_hoja): 
 
@@ -107,8 +104,54 @@ class ArchivoLayout():
 		self.excel.escribir_titulo(TITULOS, 1, clave_hoja)
 		self.excel.escribir_en_hoja(datos_sap, 0, clave_hoja)
 
+class EscribirLayout(QThread):
+	def __init__(self, ruta, ruta_txt_xml, ruta_guardado):
+		super().__init__()
+		self.ruta = ruta
+		self.ruta_txt_xml = ruta_txt_xml
+		self.ruta_guardado = ruta_guardado
 
 
-layout = ArchivoLayout()
-layout.escribir_layout()
+	def run(self):		
+		archivo_retim = ArchivoLayout(self.ruta)
+		archivo_retim.escribir_layout(self.ruta_txt_xml, self.ruta_guardado)
 
+class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
+
+	def __init__(self, *args, **kwargs):
+		QtWidgets.QMainWindow.__init__(self, *args, **kwargs)
+		self.setupUi(self)
+		self.ejecutar()
+
+
+	def ejecutar(self):    
+
+		self.btn_comenzar.clicked.connect(self.ejecutar_escritura)
+
+	def ejecutar_escritura(self):
+		ruta_trabajo = self.archivos_trab_ruta.text()
+		ruta_txt_xml = self.rutas_archivos.text()
+		nombre_excel = self.ruta_archivo_excel.text()
+		extencion    = self.extencion_archivo.text()
+		ruta_completa_excel = nombre_excel + extencion
+
+		self.escribir = EscribirLayout(ruta_trabajo, 
+											ruta_txt_xml, 
+											ruta_completa_excel
+										)
+
+		self.escribir.finished.connect(self.del_ejecucion)
+		self.escribir.start()
+	
+	def del_ejecucion(self):	
+		del self.escribir
+
+
+if __name__ == "__main__":
+    app = QtWidgets.QApplication([])
+    window = MainWindow()
+    window.show()
+    app.exec_()
+
+
+		
