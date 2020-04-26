@@ -20,8 +20,31 @@ class ArchivoIQ(Archivo_excel):
         self.hoja_lectura = self.hojas_lista[self.hoja]        #Hoja de lectura                     
 
         self.leer_titulos(self.hoja, 2)
+    
+    def extraer_columnas(self):
+        """Extre los datos de la columna"""
+        datos_obtenidos = dict()
+        COLUMNAS = ['No. Control', '1401', '1409', '1409', 
+                     '2240', '2566', '/481', '/559'] 
+              
+        
+        for columna in COLUMNAS:
 
-    def extraer_control(self):
+            fila_omitida    = self.columnas_i[columna]         #Fila que omite la lectura
+            titulos =  self.hoja_lectura[columna]
+
+            for titulo in range(fila_omitida, len(titulos)): 
+                columna = self.claves_columnas[columna]    #Columna que lee     
+                           
+            
+                datos_columna = [titulos[titulo].value]
+                datos_obtenidos[columna] = datos_columna[0]
+        
+
+        return datos_obtenidos
+      
+
+    """ def extraer_control(self):
         """Almacena el Numero de control del IQ"""
 
 
@@ -186,7 +209,7 @@ class ArchivoIQ(Archivo_excel):
         else:
             pass
 
-        return self.ccn_559
+        return self.ccn_559 """
     
 
 
