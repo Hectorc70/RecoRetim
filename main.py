@@ -66,14 +66,14 @@ class ArchivoLayout():
 		titulos = self.excel.leer_titulos(hoja, 1)
 		iq         = ArchivoIQ(self.rutas_trabajo['IQ'])                              
 		iq_control = [iq.extraer_control()]
-		iq_1401    = iq.extraer_ccn_1401()
-		iq_1409    = iq.extraer_ccn_1409()
+		conceptos    = iq.extraer_conceptos()
+		"""iq_1409    = iq.extraer_ccn_1409()
 		iq_2240    = iq.extraer_ccn_2240()
 		iq_2566    = iq.extraer_ccn_2566()
 		iq_481     = iq.extraer_ccn_481()
-		iq_559     = iq.extraer_ccn_559()
+		iq_559     = iq.extraer_ccn_559()"""
 
-		Conceptos = [iq_1401, iq_1409, iq_2240, iq_2566, iq_481, iq_559]
+		Conceptos = [conceptos, conceptos, conceptos, conceptos, conceptos, conceptos]
 		for titulo, numero_columna in titulos.items():
 
 			if titulo == 'Control':
@@ -135,14 +135,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 		extencion    = self.extencion_archivo.text()
 		ruta_completa_excel = nombre_excel + extencion
 
-		self.escribir = EscribirLayout(ruta_trabajo, 
+		"""self.escribir = EscribirLayout(ruta_trabajo, 
 											ruta_txt_xml, 
 											ruta_completa_excel
 										)
 
 		self.escribir.finished.connect(self.del_ejecucion)
-		self.escribir.start()
-	
+		self.escribir.start()"""
+
+		archivo_retim = ArchivoLayout(ruta_trabajo)
+		archivo_retim.escribir_layout(ruta_txt_xml, ruta_completa_excel)
+
 	def del_ejecucion(self):	
 		del self.escribir
 

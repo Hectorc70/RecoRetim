@@ -41,32 +41,40 @@ class ArchivoIQ(Archivo_excel):
         return self.control
       
         
-    def extraer_ccn_1401(self):
+    def extraer_conceptos(self):
 
-        self.ccn_1401 = list() 
-        titulo = '1401'
-
-        if titulo in self.columnas_ccn and titulo in self.columnas_i_ccn:
-           
-            COLUMNA = self.columnas_ccn[titulo]    #Columna que lee
-            FILA    = self.columnas_i_ccn[titulo]         #Fila que omite la lectura
+        self.conceptos_conte = dict() 
+        columna_conte = list()
+        conceptos = ['1401', '1409','2240', '2566',
+                     '/481', '/559']
+        
+        for titulo in conceptos:
+            if titulo in self.columnas_ccn and titulo in self.columnas_i_ccn:
             
-            titulos =  self.hoja_lectura[COLUMNA]
-           
-            for titulo in range(FILA, len(titulos)):   
-                ccn_1401 = [titulos[titulo].value] 
-                  
-                if ccn_1401[0] == None:
-                    self.ccn_1401.append("")
-                    continue
-                else:                       
-                    self.ccn_1401.append(ccn_1401[0])
-        else:
-            pass 
+                columna = self.columnas_ccn[titulo]    #Columna que lee
+                fila    = self.columnas_i_ccn[titulo]         #Fila que omite la lectura
+                
+                contenido =  self.hoja_lectura[columna]
+                columna_conte.clear()                          #limpia la lista para almacenar una nueva columna
+                for valor in range(fila, len(contenido)):   
+                    conceptos_contenido = [contenido[valor].value] 
+                    
+                    if conceptos_contenido[0] == None:
+                        
+                        columna_conte.append("")
+                        continue
+                    else:                       
+                        columna_conte.append(conceptos_contenido[0])
+                
+                contenido = columna_conte
+                self.conceptos_conte[titulo] = contenido
+               
+            else:
+                pass 
 
-        return self.ccn_1401
+        return self.conceptos_conte
 
-    def extraer_ccn_1409(self):
+    """ def extraer_ccn_1409(self):
 
         self.ccn_1409 = list() 
         titulo = '1409'
@@ -186,7 +194,7 @@ class ArchivoIQ(Archivo_excel):
         else:
             pass
 
-        return self.ccn_559
+        return self.ccn_559 """
     
 
 
