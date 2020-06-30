@@ -53,11 +53,14 @@ class Rutas():
 						  extencion_archivo[0].split("_")[1] == "BASE4"):
 
 						ruta_completa = ruta.replace("/", "\\") + "\\" + documento
-						self.archivos_excel["REPORTE_B4_TIM"] = ruta_completa					
+						self.archivos_excel["REPORTE_B4_TIM"] = ruta_completa	
+
+					elif extencion_archivo[0].split("_")[0] == "RECALCULO":
+						ruta_completa = ruta.replace("/", "\\") + "\\" + documento
+						self.archivos_excel["RECALCULO"] = ruta_completa	
 
 					else:
-						ruta_completa = ruta.replace("/", "\\") + "\\" + documento
-						self.archivos_excel["OTRO"] = ruta_completa
+						continue
 
 						
 		return self.archivos_excel

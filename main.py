@@ -67,11 +67,9 @@ class ArchivoLayout():
 		iq         = ArchivoIQ(self.rutas_trabajo['IQ'])                              
 		iq_control = [iq.extraer_control()]
 		conceptos    = iq.extraer_conceptos()
-		"""iq_1409    = iq.extraer_ccn_1409()
-		iq_2240    = iq.extraer_ccn_2240()
-		iq_2566    = iq.extraer_ccn_2566()
-		iq_481     = iq.extraer_ccn_481()
-		iq_559     = iq.extraer_ccn_559()"""
+
+
+		
 
 		Conceptos = [conceptos, conceptos, conceptos, conceptos, conceptos, conceptos]
 		for titulo, numero_columna in titulos.items():
@@ -79,10 +77,13 @@ class ArchivoLayout():
 			if titulo == 'Control':
 				self.excel.escribir_en_hoja(iq_control, numero_columna,
 											 clave_hoja, 0)
+
+			elif titulo == 'Recalculo':
+				self.excel.escribir_en_hoja()
 			elif titulo == 'UUID_NOM1':                 
 				self.excel.escribir_en_hoja(Conceptos, numero_columna,
 											 clave_hoja, 0)
-		
+			
 			
 					
 		

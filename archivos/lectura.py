@@ -1,6 +1,7 @@
 from tkinter.filedialog import askdirectory
 
-from archivos.modelos.archivo_excel import Archivo_excel
+#from archivos.modelos.archivo_excel import Archivo_excel
+from modelos.archivo_excel import Archivo_excel
 #rom archivos.ayuda.rutas_trabajo import Rutas
 
 
@@ -261,9 +262,37 @@ class ReporteSap(Archivo_excel):
 
 
 
+class ArchivoRecalculoBaseMun(Archivo_excel):
+    """Lee el archivo de recalculo del periodo"""
+    def __init__(self, ruta):
+        self.ruta_archivo = ruta
+        Archivo_excel.__init__(self, self.ruta_archivo)
 
+        self.hoja = 0
+        self.hoja_lectura = self.hojas_lista[self.hoja]
 
+        self.leer_titulos(self.hoja, 1)
 
+    def extraer_importes(self):
+        self.datos = dict()
+        
+        COLUMNA_CONTROL = self.claves_columnas['CONTROL']    #Columna que lee
+        COLUMNA_IMPORTE = self.claves_columnas['RECALCULO CON REDONDEO']    #Columna que lee
+        
+        FILA    = self.columnas_i['CONTROL']         #Fila que omite la lectura
+                
+        titulo_control =  self.hoja_lectura[COLUMNA_CONTROL]
+        titulo_importe =  self.hoja_lectura[COLUMNA_IMPORTE]
+
+        for control, importe in zip(range(FILA, len(titulo_control)),
+                                    range(FILA, len(titulo_importe))):
+
+            control = [titulo_control[control].value]
+            importe = [titulo_importe[importe].value]
+          
+            self.datos[control[0]] = importe[0]
+
+        return self.datos
 
 
 
@@ -296,3 +325,8 @@ class ArchivoRetimbre(Archivo_excel):
         return self.uuid
 
    
+
+"""ruta = "C:\\Users\\Usuario\\Documents\\RETIMBRE\\2020\\archivos_entrada\\RECALCULO_202010.xlsx"
+recalculo = ArchivoRecalculoBaseMun(ruta)
+recalculo.extraer_importes()
+"""
