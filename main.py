@@ -1,12 +1,12 @@
 import os
 
-from ui import  *
+from ui import *
 from PyQt5.QtWidgets import QDialog, QMessageBox
 from PyQt5.QtCore import QThread
 
 from timbres_txt.ordinaria import NominaOrdinariaBase
 from modelos.rutas_trabajo import Rutas
-from archivos.lectura import ArchivoIQ, ReporteSap, ArchivoRetimbre
+from archivos.lectura import ArchivoIQ, ReporteSap, ReporteTimbrado
 from modelos.archivos_excel import ArchivoExcel
 
 
@@ -23,7 +23,7 @@ class ArchivoLayout():
 	def escribir_layout(self, ruta_txt_xml, ruta_guardado):
 
 		nom_ord 	 = NominaOrdinariaBase(ruta_txt_xml)
-		timbres_cfdi = nom_ord.recuperar_nom()
+		timbres_cfdi = nom_ord.depurar_archivos()
 		
 		for hoja_nombre, hoja_clave in  self.excel.hojas[0].items():
 			if hoja_nombre == 'hoja trabajo':
@@ -37,7 +37,7 @@ class ArchivoLayout():
 				self.excel.escribir_en_hoja(nom1_txt, 0, hoja_clave)
 
 			elif hoja_nombre == 'xml_n1':				
-				retimbre_base1 = ArchivoRetimbre(self.rutas_trabajo['REPORTE_B1_TIM'])
+				retimbre_base1 = ReporteTimbrado(self.rutas_trabajo['REPORTE_B1_TIM'])
 				uuid_base1     = [retimbre_base1.obtener_uuid()]
 
 				nom1_xml = timbres_cfdi["nom1_timbres"]

@@ -1,7 +1,7 @@
 from tkinter.filedialog import askdirectory
 
-#from archivos.modelos.archivo_excel import Archivo_excel
-from modelos.archivo_excel import Archivo_excel
+from archivos.modelos.archivo_excel import Archivo_excel
+#from modelos.archivo_excel import Archivo_excel
 #rom archivos.ayuda.rutas_trabajo import Rutas
 
 
@@ -196,6 +196,6 @@ iq.extraer_control() """
 sap = ReporteSap(ruta)
 sap.obtener_importes_txt()"""
 
-ruta = "C:\\Users\\Usuario\\Documents\\RETIMBRE\\2020\\archivos_entrada\\ReporteTimbrado_BASE_102020.xlsx"
+""" ruta = "C:\\Users\\Usuario\\Documents\\RETIMBRE\\2020\\archivos_entrada\\ReporteTimbrado_BASE_102020.xlsx"
 retim = ReporteTimbrado(ruta)
-retim.obtener_uuid()
+retim.obtener_uuid() """

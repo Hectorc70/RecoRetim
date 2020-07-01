@@ -15,32 +15,43 @@ class NominaOrdinariaBase(Nomina, Nomina4):
 		self.ruta_nominas = ruta
 
 		
-	def recuperar_nom(self):
+	def depurar_archivos(self):
 
-		self.archivos_nom = dict()
+		ruta_nomina = self.ruta_nominas.replace('/', '\\') + '\\' + 'ORDINARIA'
 
-		for ruta, carpetas, documentos in os.walk(self.ruta_nominas, topdown = True):
+		nom1 = Nomina(ruta_nomina)
 
-			for tipo_de_nomina in carpetas:
-					ruta_completa_nomina = ruta.replace("/", "\\") + "\\" + tipo_de_nomina
+		nom1_timbres = nom1.recuperar_timbres()
+		nom1_cfdi    = nom1.recuperar_txt()
 
-					if tipo_de_nomina.split("_")[0] == "ORDINARIA":
+		nom4 = Nomina4(ruta_nomina)
+		nom4_timbres = nom4.recuperar_timbres_nom4()
+		nom4_cfdi    = nom4.recuperar_txt_nom4()    
 
-						nom1 = Nomina(ruta_completa_nomina)
+		
+		""" self.archivos_nom["nom1_timbres"] = nom1_timbres
+		self.archivos_nom["nom1_cfdi"]    = nom1_cfdi
 
-						# obtener rutas de xml y txt
-						nom1_timbres = nom1.recuperar_timbres()
-						nom1_cfdi    = nom1.recuperar_txt()
+		self.archivos_nom["nom4_timbres"] = nom4_timbres
+		self.archivos_nom["nom4_cfdi"]    = nom4_cfdi  """
 
-						nom4 = Nomina4(ruta_completa_nomina)
-						nom4_timbres = nom4.recuperar_timbres_nom4()
-						nom4_cfdi    = nom4.recuperar_txt_nom4()       
+	
 
-						self.archivos_nom["nom1_timbres"] = nom1_timbres
-						self.archivos_nom["nom1_cfdi"]    = nom1_cfdi
+		
+		
 
-						self.archivos_nom["nom4_timbres"] = nom4_timbres
-						self.archivos_nom["nom4_cfdi"]    = nom4_cfdi 
+		""" if tipo_de_nomina.split("_")[0] == "ORDINARIA":
 
-		return self.archivos_nom
+			nom1 = Nomina(ruta_completa_nomina)
+
+			# obtener rutas de xml y txt
+			nom1_timbres = nom1.recuperar_timbres()
+			nom1_cfdi    = nom1.recuperar_txt()
+
+			nom4 = Nomina4(ruta_completa_nomina)
+			nom4_timbres = nom4.recuperar_timbres_nom4()
+			nom4_cfdi    = nom4.recuperar_txt_nom4()       
+ """
 			
+		#return self.archivos_nom
+		
