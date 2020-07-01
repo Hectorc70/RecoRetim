@@ -83,53 +83,33 @@ class ReporteSap(Archivo_excel):
         self.hoja_lectura = self.hojas_lista[self.hoja]
 
         self.leer_titulos(self.hoja, 1)
-
-    def obtener_control(self):
-
-        self.control = list() 
-       
-        COLUMNA = self.claves_columnas['NO CONTROL']    #Columna que lee
-        FILA    = self.columnas_i['NO CONTROL']         #Fila que omite la lectura
-                
-        titulos =  self.hoja_lectura[COLUMNA]
-
-        for titulo in range(FILA, len(titulos)):       
-            control = [titulos[titulo].value]
-            self.control.append(control[0])
-
-        return self.control
-
-
-    def obtener_nom1(self):
-
-        self.nom1 = list() 
-       
-        COLUMNA = self.claves_columnas['NOM1']    #Columna que lee
-        FILA    = self.columnas_i['NOM1']         #Fila que omite la lectura
-                
-        titulos =  self.hoja_lectura[COLUMNA]
-
-        for titulo in range(FILA, len(titulos)):       
-            nom1 = [titulos[titulo].value]
-            
-            self.nom1.append(nom1[0])
-
-        return self.nom1
     
-    def obtener_nom4(self):
-
-        self.nom4 = list() 
-       
-        COLUMNA = self.claves_columnas['NOM4']    #Columna que lee
-        FILA    = self.columnas_i['NOM4']         #Fila que omite la lectura
+    def obtener_importes_txt(self):
+        self.datos = dict()
+        
+        COLUMNA_CONTROL = self.claves_columnas['CONTROL']    #Columna que lee
+        COLUMNA_NOM1 = self.claves_columnas['NOM1']    #Columna que lee
+        COLUMNA_NOM4 = self.claves_columnas['NOM4']    #Columna que lee
+        
+        FILA    = self.columnas_i['CONTROL']         #Fila que omite la lectura
                 
-        titulos =  self.hoja_lectura[COLUMNA]
+        titulo_control =  self.hoja_lectura[COLUMNA_CONTROL]
+        titulo_nom1 =  self.hoja_lectura[COLUMNA_NOM1]
+        titulo_nom4 =  self.hoja_lectura[COLUMNA_NOM4]
 
-        for titulo in range(FILA, len(titulos)):       
-            nom4 = [titulos[titulo].value]
-            self.nom4.append(nom4[0])
+        for control, nom1, nom4 in zip(range(FILA, len(titulo_control)),
+                                    range(FILA, len(titulo_nom1)),
+                                    range(FILA, len(titulo_nom4))):
 
-        return self.nom4
+            control = [titulo_control[control].value]
+            importe_nom1 = [titulo_nom1[nom1].value]
+            importe_nom4 = [titulo_nom4[nom4].value]
+          
+            self.datos[control[0]] = [importe_nom1[0], importe_nom4[0]]
+
+        return self.datos
+   
+ 
 
 
 
@@ -207,4 +187,6 @@ recalculo.extraer_importes()
 """ ruta = "C:\\Users\\Usuario\\Documents\\RETIMBRE\\2020\\archivos_entrada\\IQ_202010_ORDINARIAv3.xlsx"
 iq = ArchivoIQ(ruta)
 iq.extraer_control() """
-
+ruta = "C:\\Users\\Usuario\\Documents\\RETIMBRE\\2020\\archivos_entrada\\ReporteSAP_Base_202010.xlsx"
+sap = ReporteSap(ruta)
+sap.obtener_importes_txt()
