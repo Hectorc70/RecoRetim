@@ -21,12 +21,15 @@ class ArchivoIQ(Archivo_excel):
         self.hoja_lectura = self.hojas_lista[self.hoja]        #Hoja de lectura                     
 
         self.leer_titulos(self.hoja, 2)
+    
+   
 
-    def extraer_control(self):
-        """Almacena el Numero de control del IQ"""
+    def obtener_datos_iq(self):
+        """Almacena el Numero de empleado  del IQ con sus respectivo
+        conceptos que se utilizan en el retimbrado"""
 
 
-        self.control = list() 
+        self.datos_empleado = dict() 
        
         COLUMNA = self.claves_columnas['No. Control']    #Columna que lee
         FILA    = self.columnas_i['No. Control']         #Fila que omite la lectura
@@ -34,170 +37,38 @@ class ArchivoIQ(Archivo_excel):
         titulos =  self.hoja_lectura[COLUMNA]
 
         for titulo in range(FILA, len(titulos)):            
-            
+            conceptos = self.extraer_conceptos(titulo)
             control = [titulos[titulo].value]
-            self.control.append(control[0])
+            self.datos_empleado[control[0]] = conceptos
         
 
         return self.control
       
         
-    def extraer_conceptos(self):
-
-        self.conceptos_conte = dict() 
-        columna_conte = list()
+    def extraer_conceptos(self, fila):      
+        conceptos_conte = dict()
         conceptos = ['1401', '1409','2240', '2566',
                      '/481', '/559']
-        
+
+        fila_lectura = fila+1 
         for titulo in conceptos:
             if titulo in self.columnas_ccn and titulo in self.columnas_i_ccn:
             
-                columna = self.columnas_ccn[titulo]    #Columna que lee
-                fila    = self.columnas_i_ccn[titulo]         #Fila que omite la lectura
+                columna = self.columnas_ccn[titulo]    #Columna que lee               
                 
-                contenido =  self.hoja_lectura[columna]
-                columna_conte.clear()                          #limpia la lista para almacenar una nueva columna
-                for valor in range(fila, len(contenido)):   
-                    conceptos_contenido = [contenido[valor].value] 
-                    
-                    if conceptos_contenido[0] == None:
+                contenido_celda =  self.hoja_lectura[columna+str(fila_lectura)].value
+                              
+                if contenido_celda == None:
                         
-                        columna_conte.append("")
-                        continue
-                    else:                       
-                        columna_conte.append(conceptos_contenido[0])
-                
-                contenido = columna_conte
-                self.conceptos_conte[titulo] = contenido
+                    conceptos_conte[titulo] = ''
+                    continue
+                else:                       
+                   conceptos_conte[titulo] = contenido_celda               
                
             else:
                 pass 
 
-        return self.conceptos_conte
-
-    """ def extraer_ccn_1409(self):
-
-        self.ccn_1409 = list() 
-        titulo = '1409'
-
-        if titulo in self.columnas_ccn and titulo in self.columnas_i_ccn:
-        
-            COLUMNA = self.columnas_ccn[titulo]    #Columna que lee
-            FILA    = self.columnas_i_ccn[titulo]         #Fila que omite la lectura
-            
-            titulos =  self.hoja_lectura[COLUMNA]
-
-            for titulo in range(FILA, len(titulos)):       
-                ccn_1409 = [titulos[titulo].value]
-                if ccn_1409[0] == None:
-                    self.ccn_1409.append("")
-                    continue
-                else:
-                    self.ccn_1409.append(ccn_1409[0])
-        else:
-            pass
-
-        return self.ccn_1409
-
-    def extraer_ccn_2240(self):
-
-        self.ccn_2240 = list() 
-        titulo = '2240'
-
-        if titulo in self.columnas_ccn and titulo in self.columnas_i_ccn:
-        
-            COLUMNA = self.columnas_ccn[titulo]    #Columna que lee
-            FILA    = self.columnas_i_ccn[titulo]         #Fila que omite la lectura
-            
-            titulos =  self.hoja_lectura[COLUMNA]
-
-            for titulo in range(FILA, len(titulos)):       
-                ccn_2240 = [titulos[titulo].value]
-                if ccn_2240[0] == None:
-                    self.ccn_2240.append("")
-                    continue
-                else:
-                    self.ccn_2240.append(ccn_2240[0])
-        else:
-            pass
-
-
-        return self.ccn_2240
-
-    def extraer_ccn_2566(self):
-        self.ccn_2566 = list() 
-        titulo = '2566'
-
-        if titulo in self.columnas_ccn and titulo in self.columnas_i_ccn:
-        
-            COLUMNA = self.columnas_ccn[titulo]    #Columna que lee
-            FILA    = self.columnas_i_ccn[titulo]         #Fila que omite la lectura
-            
-            titulos =  self.hoja_lectura[COLUMNA]
-
-            for titulo in range(FILA, len(titulos)):       
-                ccn_2566 = [titulos[titulo].value]
-                if ccn_2566[0] == None:
-                    self.ccn_2566.append("")
-                    continue
-                else:
-                    self.ccn_2566.append(ccn_2566[0])
-        else:
-            pass
-
-        return self.ccn_2566
-
-        
-    def extraer_ccn_481(self):
-
-        self.ccn_481 = list() 
-        titulo = '/481'
-
-        if titulo in self.columnas_ccn and titulo in self.columnas_i_ccn:
-        
-            COLUMNA = self.columnas_ccn[titulo]    #Columna que lee
-            FILA    = self.columnas_i_ccn[titulo]         #Fila que omite la lectura
-            
-            titulos =  self.hoja_lectura[COLUMNA]
-
-            for titulo in range(FILA, len(titulos)):       
-                ccn_481 = [titulos[titulo].value]
-                if ccn_481[0] == None:
-                    self.ccn_481.append("")
-                    continue
-                else:
-                    self.ccn_481.append(ccn_481[0])
-        else:
-            pass
-
-        return self.ccn_481
-
-
-    def extraer_ccn_559(self):
-        
-        self.ccn_559 = list() 
-        titulo = '/559'
-
-        if titulo in self.columnas_ccn and titulo in self.columnas_i_ccn:
-        
-            COLUMNA = self.columnas_ccn[titulo]    #Columna que lee
-            FILA    = self.columnas_i_ccn[titulo]         #Fila que omite la lectura
-            
-            titulos =  self.hoja_lectura[COLUMNA]
-
-            for titulo in range(FILA, len(titulos)):       
-                ccn_559 = [titulos[titulo].value]
-                if ccn_559[0] == None:
-                    self.ccn_559.append("")
-                    continue
-                else:
-                    self.ccn_559.append(ccn_559[0])
-        else:
-            pass
-
-        return self.ccn_559 """
-    
-
+        return conceptos_conte
 
 
 
@@ -324,9 +195,16 @@ class ArchivoRetimbre(Archivo_excel):
 
         return self.uuid
 
-   
 
+
+#recalculo = ArchivoRecalculoBaseMun()
 """ruta = "C:\\Users\\Usuario\\Documents\\RETIMBRE\\2020\\archivos_entrada\\RECALCULO_202010.xlsx"
 recalculo = ArchivoRecalculoBaseMun(ruta)
 recalculo.extraer_importes()
 """
+
+#IQ
+""" ruta = "C:\\Users\\Usuario\\Documents\\RETIMBRE\\2020\\archivos_entrada\\IQ_202010_ORDINARIAv3.xlsx"
+iq = ArchivoIQ(ruta)
+iq.extraer_control() """
+
