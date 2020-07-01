@@ -148,7 +148,7 @@ class ArchivoRecalculoBaseMun(Archivo_excel):
 
 
 
-class ArchivoRetimbre(Archivo_excel):
+class ReporteTimbrado(Archivo_excel):
     """lee layout excel para el retimbre"""
 
     def __init__(self, ruta):
@@ -162,16 +162,21 @@ class ArchivoRetimbre(Archivo_excel):
     
     
     def obtener_uuid(self):
-        self.uuid = list()
+        self.uuid = dict()
         
-        COLUMNA = self.claves_columnas['UUID']    #Columna que lee
-        FILA    = self.columnas_i['UUID']         #Fila que omite la lectura
+        COLUMNA_CONTROL = self.claves_columnas['ARCHIVO']    #Columna que lee
+        COLUMNA_UUID = self.claves_columnas['UUID']    #Columna que lee
+        FILA    = self.columnas_i['ARCHIVO']         #Fila que omite la lectura
                 
-        titulos =  self.hoja_lectura[COLUMNA]
+        colum_control =  self.hoja_lectura[COLUMNA_CONTROL]
+        colum_uuid =  self.hoja_lectura[COLUMNA_UUID]
 
-        for titulo in range(FILA, len(titulos)):       
-            uuid = [titulos[titulo].value]
-            self.uuid.append(uuid[0])
+        for control, uuid in zip(range(FILA, len(colum_control)),range(FILA, len(colum_uuid))):
+            nombre_archivo = [colum_control[control].value]
+            control = int(nombre_archivo[0].split('_')[0])    
+            uuid_celda    = [colum_uuid[uuid].value]
+
+            self.uuid[str(control)] = uuid_celda[0]
 
         return self.uuid
 
@@ -184,9 +189,13 @@ recalculo.extraer_importes()
 """
 
 #IQ
-""" ruta = "C:\\Users\\Usuario\\Documents\\RETIMBRE\\2020\\archivos_entrada\\IQ_202010_ORDINARIAv3.xlsx"
+"""ruta = "C:\\Users\\Usuario\\Documents\\RETIMBRE\\2020\\archivos_entrada\\IQ_202010_ORDINARIAv3.xlsx"
 iq = ArchivoIQ(ruta)
 iq.extraer_control() """
-ruta = "C:\\Users\\Usuario\\Documents\\RETIMBRE\\2020\\archivos_entrada\\ReporteSAP_Base_202010.xlsx"
+"""ruta = "C:\\Users\\Usuario\\Documents\\RETIMBRE\\2020\\archivos_entrada\\ReporteSAP_Base_202010.xlsx"
 sap = ReporteSap(ruta)
-sap.obtener_importes_txt()
+sap.obtener_importes_txt()"""
+
+ruta = "C:\\Users\\Usuario\\Documents\\RETIMBRE\\2020\\archivos_entrada\\ReporteTimbrado_BASE_102020.xlsx"
+retim = ReporteTimbrado(ruta)
+retim.obtener_uuid()
