@@ -1,12 +1,11 @@
 import os
 
 from ui import *
-from PyQt5.QtWidgets import QDialog, QMessageBox
+from PyQt5.QtWidgets import QDialog, QMessageBox, QFileDialog
 from PyQt5.QtCore import QThread
 
 from ordinaria import NominaOrdinariaBase
 from modelos.rutas_trabajo import Rutas
-from archivos.lectura import ArchivoIQ, ReporteSap, ReporteTimbrado
 from modelos.archivos_excel import ArchivoExcel
 
 
@@ -19,24 +18,33 @@ class ArchivoLayout():
 
 		self.excel = ArchivoExcel(self.rutas_trabajo['TRABAJO'])
 		
-   
-	def escribir_layout(self, ruta_txt_xml, ruta_guardado):
+	def comprobar_faltantes(self, ruta_txt_xml, ruta_guardado, anno, periodo):
+		nom_ord 	 = NominaOrdinariaBase(ruta_txt_xml, self.rutas_trabajo)
+		datos_para_retimbre = nom_ord.validar_empleados()
 
-		nom_ord 	 = NominaOrdinariaBase(ruta_txt_xml, )
-		timbres_cfdi = nom_ord.depurar_archivos()
+		if datos_para_retimbre['NO SE ENCONTRO']:
+
+			return datos_para_retimbre['NO SE ENCONTRO']
+			
+		else:
+			self.escribir_layout(ruta_txt_xml, ruta_guardado, datos_para_retimbre,  anno, periodo)
+
+
+	def escribir_layout(self, ruta_txt_xml, ruta_guardado, datos, anno, periodo):
+	
 		
 		for hoja_nombre, hoja_clave in  self.excel.hojas[0].items():
 			if hoja_nombre == 'hoja trabajo':
-				self.escribir_conceptos(hoja_nombre, hoja_clave)
+				self.escribir_trabajo(hoja_nombre, hoja_clave, datos, anno, periodo)
 				
 			elif hoja_nombre == 'txt_sap':
 				self.escribir_reporte_sap(hoja_nombre, hoja_clave)
 
 			elif hoja_nombre == 'txt_n1':
-				nom1_txt = timbres_cfdi["nom1_cfdi"]
+				nom1_txt = datos["nom1_cfdi"]
 				self.excel.escribir_en_hoja(nom1_txt, 0, hoja_clave)
 
-			elif hoja_nombre == 'xml_n1':				
+			"""if hoja_nombre == 'xml_n1':				
 				retimbre_base1 = ReporteTimbrado(self.rutas_trabajo['REPORTE_B1_TIM'])
 				uuid_base1     = [retimbre_base1.obtener_uuid()]
 
@@ -56,22 +64,16 @@ class ArchivoLayout():
 				nom4_xml = timbres_cfdi["nom4_timbres"]
 
 				self.excel.escribir_en_hoja(nom4_xml, 0, hoja_clave)
-				self.excel.escribir_en_hoja(uuid_base4, 3, hoja_clave)
+				self.excel.escribir_en_hoja(uuid_base4, 3, hoja_clave)"""
 
 				
 		self.excel.guardar(ruta_guardado)
 
-	def escribir_conceptos(self, hoja, clave_hoja): 
+	def escribir_trabajo(self, hoja, clave_hoja, datos, anno, periodo): 
 
-		titulos = self.excel.leer_titulos(hoja, 1)
-		iq         = ArchivoIQ(self.rutas_trabajo['IQ'])                              
-		iq_control = [iq.extraer_control()]
-		conceptos    = iq.extraer_conceptos()
+		titulos = self.excel.leer_titulos(hoja, 1)	
 
-
-		
-
-		Conceptos = [conceptos, conceptos, conceptos, conceptos, conceptos, conceptos]
+		""" 
 		for titulo, numero_columna in titulos.items():
 
 			if titulo == 'Control':
@@ -83,7 +85,7 @@ class ArchivoLayout():
 			elif titulo == 'UUID_NOM1':                 
 				self.excel.escribir_en_hoja(Conceptos, numero_columna,
 											 clave_hoja, 0)
-			
+			 """
 			
 					
 		
@@ -115,7 +117,7 @@ class EscribirLayout(QThread):
 
 	def run(self):		
 		archivo_retim = ArchivoLayout(self.ruta)
-		archivo_retim.escribir_layout(self.ruta_txt_xml, self.ruta_guardado)
+		archivo_retim.comprobar_faltantes(self.ruta_txt_xml, self.ruta_guardado)
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
@@ -124,31 +126,81 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.setupUi(self)
 		self.ejecutar()
 
+	def comprobar_rutas(self):
+		ruta_trabajo = self.in_archivos_excel.text()
+		ruta_txt_xml = self.in_xml_txt.text()
+		ruta_guardado = self.in_guardado.text()	
+
+		if ruta_trabajo != '' and ruta_txt_xml != '' and ruta_guardado != '':	
+			return True
+		else:
+			return False	
+
+
 
 	def ejecutar(self):    
+		"""Ejecuta si se presiona un boton"""
+		self.btn_start.clicked.connect(self.ejecutar_escritura)
+		self.btn_excel.clicked.connect(self.mostrar_ruta_excel)
+		self.btn_archivos.clicked.connect(self.mostrar_ruta_archivos)
+		self.btn_guardar.clicked.connect(self.guardar)
 
-		self.btn_comenzar.clicked.connect(self.ejecutar_escritura)
+
 
 	def ejecutar_escritura(self):
-		ruta_trabajo = self.archivos_trab_ruta.text()
-		ruta_txt_xml = self.rutas_archivos.text()
-		nombre_excel = self.ruta_archivo_excel.text()
-		extencion    = self.extencion_archivo.text()
-		ruta_completa_excel = nombre_excel + extencion
+		"""Ejecuta el proceso principal"""
+		rutas = self.comprobar_rutas()
+		if rutas:
+			ruta_trabajo = self.in_archivos_excel.text()
+			ruta_txt_xml = self.in_xml_txt.text()
+			ruta_guardado = self.in_guardado.text()				
+			anno	= self.anno.value()
+			periodo = self.periodo.value()
 
-		"""self.escribir = EscribirLayout(ruta_trabajo, 
-											ruta_txt_xml, 
-											ruta_completa_excel
-										)
+			"""self.escribir = EscribirLayout(ruta_trabajo, 
+												ruta_txt_xml, 
+												ruta_completa_excel
+											)
 
-		self.escribir.finished.connect(self.del_ejecucion)
-		self.escribir.start()"""
+			self.escribir.finished.connect(self.del_ejecucion)
+			self.escribir.start()"""
 
-		archivo_retim = ArchivoLayout(ruta_trabajo)
-		archivo_retim.escribir_layout(ruta_txt_xml, ruta_completa_excel)
+			archivo_retim = ArchivoLayout(ruta_trabajo)
+			archivo_retim.comprobar_faltantes(ruta_txt_xml, ruta_guardado, anno, periodo)
+		else:
+			self.mostrar_mensaje_warning('AVISO', 'Seleccione todas las rutas necesarias')
+
 
 	def del_ejecucion(self):	
 		del self.escribir
+
+
+	def mostrar_ruta_excel(self):
+		ruta = self.abrir_directorio('SELECCIONA LA CARPETA CON LOS ARCHIVOS DE ENTRADA')
+
+		self.in_archivos_excel.setText(ruta)
+	
+	def mostrar_ruta_archivos(self):
+		ruta = self.abrir_directorio('SELECCIONA EL PERIODO DE XML Y TXT')
+
+		self.in_xml_txt.setText(ruta)
+
+	def guardar(self):
+		""""Abre un explorador para guardar un archivo"""
+
+
+		ruta = QFileDialog.getSaveFileName(self, 'Guardar como...')		
+		self.in_guardado.setText(ruta[0])
+		
+	def abrir_directorio(self, titulo):
+		"""Abre un explorador para seleccionar una carpeta"""
+
+		ruta_carpeta = QFileDialog.getExistingDirectory(self, titulo)
+
+		return ruta_carpeta
+	
+	def mostrar_mensaje_warning(self,titulo, texto):
+		QMessageBox.warning(self, titulo, texto)
 
 
 if __name__ == "__main__":

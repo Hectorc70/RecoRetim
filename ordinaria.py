@@ -28,7 +28,7 @@ class NominaOrdinariaBase(Nomina, Nomina4):
 
 		
 	def depurar_archivos(self):
-
+		archivos = dict()
 		ruta_nomina = self.ruta_nominas.replace('/', '\\') + '\\' + 'ORDINARIA'
 
 		nom1 = Nomina(ruta_nomina)
@@ -40,12 +40,21 @@ class NominaOrdinariaBase(Nomina, Nomina4):
 		nom4_timbres = nom4.recuperar_timbres_nom4()
 		nom4_cfdi    = nom4.recuperar_txt_nom4()    
 
+		archivos['txt_nom1'] = nom1_cfdi
+		archivos['xml_nom1'] = nom1_timbres
+
+		archivos['txt_nom4'] = nom4_cfdi
+		archivos['xml_nom4'] = nom4_timbres
+
+		return archivos
 		
 	def validar_empleados(self):	
 		"""Solo deja los datos de los empleados que 
 		estan en el archivo de recalculo"""	
-
+	
 		para_retimbre = dict()
+
+		archivos = self.depurar_archivos()
 
 		importes_recalculo = self.recalculo.extraer_importes()
 		empleados_iq = self.iq.obtener_datos_iq()
@@ -66,7 +75,8 @@ class NominaOrdinariaBase(Nomina, Nomina4):
 			else:
 				para_retimbre['NO SE ENCONTRO'] = empleado
 				continue
-			
+					
+		return para_retimbre
 
 
 
