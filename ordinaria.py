@@ -53,6 +53,7 @@ class NominaOrdinariaBase(Nomina, Nomina4):
 		estan en el archivo de recalculo"""	
 	
 		para_retimbre = dict()
+		no_encontrados = list()
 
 		archivos = self.depurar_archivos()
 
@@ -64,18 +65,22 @@ class NominaOrdinariaBase(Nomina, Nomina4):
 
 		for empleado, recalculo in importes_recalculo.items():
 			
-			if (empleado in empleados_iq and empleado in sap_importes,
-				empleado in uuid_nom1 and empleado in uuid_nom4):
+			if (empleado in empleados_iq and empleado in sap_importes and
+				empleado in uuid_nom1):
 
+				if empleado not in uuid_nom4:
+					uuid_nom4[empleado] = ''
+				
 				datos = [empleados_iq[empleado], sap_importes[empleado],
 						uuid_nom1[empleado], uuid_nom4[empleado]]
 			
 				para_retimbre[empleado] = datos
 			
-			else:
-				para_retimbre['NO SE ENCONTRO'] = empleado
+			else:				
+				no_encontrados.append(empleado)
 				continue
-					
+
+		para_retimbre['NO SE ENCONTRO'] = no_encontrados
 		return para_retimbre
 
 

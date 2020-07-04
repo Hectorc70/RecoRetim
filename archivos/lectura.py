@@ -39,10 +39,10 @@ class ArchivoIQ(Archivo_excel):
         for titulo in range(FILA, len(titulos)):            
             conceptos = self.extraer_conceptos(titulo)
             control = [titulos[titulo].value]
-            self.datos_empleado[control[0]] = conceptos
+            self.datos_empleado[str(control[0])] = conceptos
         
 
-        return self.control
+        return self.datos_empleado
       
         
     def extraer_conceptos(self, fila):      
@@ -105,7 +105,7 @@ class ReporteSap(Archivo_excel):
             importe_nom1 = [titulo_nom1[nom1].value]
             importe_nom4 = [titulo_nom4[nom4].value]
           
-            self.datos[control[0]] = [importe_nom1[0], importe_nom4[0]]
+            self.datos[str(control[0])] = [importe_nom1[0], importe_nom4[0]]
 
         return self.datos
    
@@ -141,7 +141,7 @@ class ArchivoRecalculoBaseMun(Archivo_excel):
             control = [titulo_control[control].value]
             importe = [titulo_importe[importe].value]
           
-            self.datos[control[0]] = importe[0]
+            self.datos[str(control[0])] = importe[0]
 
         return self.datos
 

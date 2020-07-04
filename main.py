@@ -1,7 +1,7 @@
 import os
 
 from ui import *
-from PyQt5.QtWidgets import QDialog, QMessageBox, QFileDialog
+from PyQt5.QtWidgets import QDialog, QMessageBox, QFileDialog, QTableView
 from PyQt5.QtCore import QThread
 
 from ordinaria import NominaOrdinariaBase
@@ -27,8 +27,9 @@ class ArchivoLayout():
 			return datos_para_retimbre['NO SE ENCONTRO']
 			
 		else:
+			
 			self.escribir_layout(ruta_txt_xml, ruta_guardado, datos_para_retimbre,  anno, periodo)
-
+			return 'Correcto'
 
 	def escribir_layout(self, ruta_txt_xml, ruta_guardado, datos, anno, periodo):
 	
@@ -87,12 +88,7 @@ class ArchivoLayout():
 											 clave_hoja, 0)
 			 """
 			
-					
-		
-		
-	
-
-	
+						
 	def escribir_reporte_sap(self, hoja, clave_hoja):      
 
 		reportesap = ReporteSap(self.rutas_trabajo['REPORTE_SAP'])
@@ -125,7 +121,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 		QtWidgets.QMainWindow.__init__(self, *args, **kwargs)
 		self.setupUi(self)
 		self.ejecutar()
-
+		
 	def comprobar_rutas(self):
 		ruta_trabajo = self.in_archivos_excel.text()
 		ruta_txt_xml = self.in_xml_txt.text()
@@ -166,7 +162,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 			self.escribir.start()"""
 
 			archivo_retim = ArchivoLayout(ruta_trabajo)
-			archivo_retim.comprobar_faltantes(ruta_txt_xml, ruta_guardado, anno, periodo)
+			datos = archivo_retim.comprobar_faltantes(ruta_txt_xml, ruta_guardado, anno, periodo)
+
+			if datos!= 'correcto':				
+				self.mostrar_mensaje_warning('AVISO', 'estos empleados no se encontraron')
+				self.dibujar_en_tabla(datos)
 		else:
 			self.mostrar_mensaje_warning('AVISO', 'Seleccione todas las rutas necesarias')
 
@@ -189,7 +189,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 		""""Abre un explorador para guardar un archivo"""
 
 
-		ruta = QFileDialog.getSaveFileName(self, 'Guardar como...')		
+		ruta = QFileDialog.getSaveFileName(self, 'Guardar como...')
 		self.in_guardado.setText(ruta[0])
 		
 	def abrir_directorio(self, titulo):
@@ -202,7 +202,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 	def mostrar_mensaje_warning(self,titulo, texto):
 		QMessageBox.warning(self, titulo, texto)
 
-
+	def dibujar_en_tabla(self, datos):
+		for dato in datos:
+			self.vista.addItem(dato)
+		
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
     window = MainWindow()
