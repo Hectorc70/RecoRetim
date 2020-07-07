@@ -167,6 +167,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 			if datos!= 'correcto':				
 				self.mostrar_mensaje_warning('AVISO', 'estos empleados no se encontraron')
 				self.dibujar_en_tabla(datos)
+				respuesta = self.mostrar_mensaje_question('', '¿Quiere buscar en las otras nominas el numero de control?')
+
+				if respuesta == 16384:
+					pass
 		else:
 			self.mostrar_mensaje_warning('AVISO', 'Seleccione todas las rutas necesarias')
 
@@ -201,6 +205,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 	
 	def mostrar_mensaje_warning(self,titulo, texto):
 		QMessageBox.warning(self, titulo, texto)
+
+	def mostrar_mensaje_question(self,titulo, texto):
+
+		opcion = QMessageBox.question(self, titulo, texto)
+
+	
+
+		
+		return opcion
 
 	def dibujar_en_tabla(self, datos):
 		for dato in datos:
